@@ -1,0 +1,94 @@
+{
+    "name": "argopecten/civicrm-profile",
+    "type": "drupal-profile",
+    "description": "The CiviCRM profile from Argopecten.",
+    "repositories": {
+      "0": {
+          "type": "composer",
+          "url": "https://packages.drupal.org/7"
+      },
+      "1": {
+         "type": "package",
+         "package": {
+            "name": "civicrm/civicrm",
+            "version": "5.13.4",
+            "type": "drupal-module",
+            "dist": {
+               "url": "https://sourceforge.net/projects/civicrm/files/civicrm-stable/5.13.4/civicrm-5.13.4-drupal.tar.gz",
+               "type": "tar"
+            }
+         }
+      }
+    },
+    "require": {
+         "php": "~7.2.0",
+         "ext-curl": "*",
+         "ext-gd": "*",
+         "ext-json": "*",
+         "ext-openssl": "*",
+         "ext-pdo": "*",
+         "ext-xml": "*",
+         "composer/installers": "^1.2",
+         "composer/semver": "^1.4",
+         "cweagans/composer-patches": "^1.6.5",
+         "drupal-composer/preserve-paths": "^0.1",
+         "drupal/composer_autoloader": "^1.0",
+         "drupal/drupal": "7.67",
+         "drush/drush": "^8.0",
+         "symfony/filesystem": "~2.7|^3",
+         "webflo/drupal-finder": "^1.0.0",
+         "civicrm/civicrm": "5.13.4",
+         "drupal/admin_menu": "3.0-rc6",
+         "drupal/ctools": "1.15",
+         "drupal/entity": "1.9",
+         "drupal/webform": "4.19",
+         "drupal/options_element": "1.12",
+         "drupal/webform_civicrm": "4.26",
+         "drupal/bootstrap": "3.25",
+         "drupal/jquery_update": "2.7",
+         "drupal/views": "3.23"
+    },
+    "conflict": {
+        "drupal/core": "8.*"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true
+    },
+    "scripts": {
+        "pre-install-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
+        ],
+        "pre-update-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
+        ],
+        "post-install-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
+        ],
+        "post-update-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
+        ],
+        "post-create-project-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::removeInternalFiles"
+        ]
+    },
+    "extra": {
+        "installer-paths": {
+            "web/": ["type:drupal-core"],
+            "web/profiles/{$name}/": ["type:drupal-profile"],
+            "web/sites/all/drush/{$name}/": ["type:drupal-drush"],
+            "web/sites/all/libraries/{$name}/": ["type:drupal-library"],
+            "web/sites/all/modules/contrib/{$name}/": ["type:drupal-module"],
+            "web/sites/all/themes/contrib/{$name}/": ["type:drupal-theme"]
+        },
+        "patches": {
+            "cweagans/composer-patches": {
+                "Call the preserve paths hooks" : "https://github.com/SebCorbin/composer-patches/commit/1cb9bacba51f8bba0c5f3f322c3bb61e4ceae974.patch"
+            }
+        },
+        "preserve-paths": [
+            "web/sites"
+        ]
+    }
+}
