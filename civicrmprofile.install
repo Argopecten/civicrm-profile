@@ -1,0 +1,40 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the civicrm installation profile.
+ */
+
+ /**
+  * Implements hook_install().
+  *
+  * Performs actions to set up the site for this profile.
+  * Based on minimal.install
+  *
+  * @see system_install()
+  */
+ function civicrmprofile_install() {
+   // Enable standard content block only.
+   $default_theme = variable_get('theme_default', 'bartik');
+   $values = array(
+     array(
+       'module' => 'system',
+       'delta' => 'main',
+       'theme' => $default_theme,
+       'status' => 1,
+       'weight' => 0,
+       'region' => 'content',
+       'pages' => '',
+       'cache' => -1,
+     ),
+   );
+   $query = db_insert('block')->fields(array('module', 'delta', 'theme', 'status', 'weight', 'region', 'pages', 'cache'));
+   foreach ($values as $record) {
+     $query->values($record);
+   }
+   $query->execute();
+
+   // Enable default permissions for system roles.
+   user_role_grant_permissions(DRUPAL_ANONYMOUS_RID, array('access content'));
+   user_role_grant_permissions(DRUPAL_AUTHENTICATED_RID, array('access content'));
+ }
