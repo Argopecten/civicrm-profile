@@ -1,5 +1,5 @@
 {
-    "name": "argopecten/civicrm-profile",
+    "name": "argopecten/civicrmprofile",
     "type": "drupal-profile",
     "description": "The CiviCRM profile from Argopecten.",
     "repositories": {
