@@ -13,7 +13,7 @@
   *
   * @see system_install()
   */
- function civicrm-profile_install() {
+ function civicrmprofile_install() {
    // Enable standard content block only.
    $default_theme = variable_get('theme_default', 'bartik');
    $values = array(
