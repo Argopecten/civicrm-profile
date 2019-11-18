@@ -18,6 +18,18 @@
                "type": "tar"
             }
          }
+       },
+       "l10n": {
+          "type": "package",
+          "package": {
+             "name": "civicrm/civicrm_l10n_core",
+             "version": "5.15.1",
+             "type": "drupal-library",
+             "dist": {
+                "url": "https://download.civicrm.org/civicrm-5.15.1-l10n.tar.gz",
+                "type": "tar"
+             }
+          }
       }
     },
     "require": {
@@ -38,6 +50,7 @@
          "symfony/filesystem": "~2.7|^3",
          "webflo/drupal-finder": "^1.0.0",
          "civicrm/civicrm": "5.15.1",
+         "civicrm/civicrm_l10n_core": "5.15.1",
          "drupal/admin_menu": "3.0-rc6",
          "drupal/ctools": "1.15",
          "drupal/entity": "1.9",
@@ -57,6 +70,12 @@
         "sort-packages": true
     },
     "scripts": {
+        "install-l10n": [
+            "mkdir -p web/sites/all/modules/contrib/civicrm/l10n",
+            "cp -r web/sites/all/libraries/civicrm_l10n_core/l10n/hu_HU/ web/sites/all/modules/contrib/civicrm/l10n",
+            "cp web/sites/all/libraries/civicrm_l10n_core/sql/*.hu_HU.mysql web/sites/all/modules/contrib/civicrm/sql/",
+            "rm -rf web/sites/all/libraries/civicrm_l10n_core"
+        ],
         "pre-install-cmd": [
             "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
         ],
@@ -64,11 +83,11 @@
             "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
         ],
         "post-install-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
-        ],
+            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
+            "@install-l10n"        ],
         "post-update-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
-        ],
+            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
+            "@install-l10n"        ],
         "post-create-project-cmd": [
             "DrupalProject\\composer\\ScriptHandler::removeInternalFiles"
         ]
