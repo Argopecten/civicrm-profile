@@ -11,10 +11,10 @@
          "type": "package",
          "package": {
             "name": "civicrm/civicrm",
-            "version": "5.13.4",
+            "version": "5.15.1",
             "type": "drupal-module",
             "dist": {
-               "url": "https://sourceforge.net/projects/civicrm/files/civicrm-stable/5.13.4/civicrm-5.13.4-drupal.tar.gz",
+               "url": "https://sourceforge.net/projects/civicrm/files/civicrm-stable/5.15.1/civicrm-5.15.1-drupal.tar.gz",
                "type": "tar"
             }
          }
@@ -37,14 +37,14 @@
          "drush/drush": "^8.0",
          "symfony/filesystem": "~2.7|^3",
          "webflo/drupal-finder": "^1.0.0",
-         "civicrm/civicrm": "5.13.4",
+         "civicrm/civicrm": "5.15.1",
          "drupal/admin_menu": "3.0-rc6",
          "drupal/ctools": "1.15",
          "drupal/entity": "1.9",
          "drupal/webform": "4.19",
          "drupal/options_element": "1.12",
          "drupal/webform_civicrm": "4.26",
-         "drupal/bootstrap": "3.25",
+         "drupal/bootstrap": "3.26",
          "drupal/jquery_update": "2.7",
          "drupal/views": "3.23"
     },
