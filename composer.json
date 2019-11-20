@@ -30,6 +30,18 @@
                 "type": "tar"
              }
           }
+        },
+        "shoreditch": {
+           "type": "package",
+           "package": {
+              "name": "civicrm/shoreditch",
+              "version": "v0.1-alpha32",
+              "type": "drupal-library",
+              "dist": {
+                 "url": "https://github.com/civicrm/org.civicrm.shoreditch",
+                 "type": "github"
+              }
+           }
       }
     },
     "require": {
@@ -51,6 +63,7 @@
          "webflo/drupal-finder": "^1.0.0",
          "civicrm/civicrm": "5.15.1",
          "civicrm/civicrm_l10n_core": "5.15.1",
+         "civicrm/shoreditch": "v0.1-alpha32",
          "drupal/admin_menu": "3.0-rc6",
          "drupal/ctools": "1.15",
          "drupal/entity": "1.9",
