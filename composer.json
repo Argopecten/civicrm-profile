@@ -34,7 +34,7 @@
         "shoreditch": {
            "type": "package",
            "package": {
-              "name": "civicrm/shoreditch",
+              "name": "civicrm/org.civicrm.shoreditch",
               "version": "v0.1-alpha32",
               "type": "drupal-library",
               "source": {
@@ -90,6 +90,9 @@
             "cp web/sites/all/libraries/civicrm_l10n_core/sql/*.hu_HU.mysql web/sites/all/modules/contrib/civicrm/sql/",
             "rm -rf web/sites/all/libraries/civicrm_l10n_core"
         ],
+        "theme-settings": [
+            "mv web/sites/all/libraries/org.civicrm.shoreditch web/sites/all/modules/contrib/civicrm/ext"
+        ],
         "pre-install-cmd": [
             "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
         ],
@@ -98,11 +101,13 @@
         ],
         "post-install-cmd": [
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
-            "@install-l10n"
+            "@install-l10n",
+            "@theme-settings"
         ],
         "post-update-cmd": [
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
-            "@install-l10n"
+            "@install-l10n",
+            "@theme-settings"
         ],
         "post-create-project-cmd": [
             "DrupalProject\\composer\\ScriptHandler::removeInternalFiles"
