@@ -14,7 +14,7 @@
             "version": "5.15.1",
             "type": "drupal-module",
             "dist": {
-               "url": "https://sourceforge.net/projects/civicrm/files/civicrm-stable/5.15.1/civicrm-5.15.1-drupal.tar.gz",
+               "url": "https://download.civicrm.org/civicrm-5.15.1-drupal.tar.gz",
                "type": "tar"
             }
          }
@@ -84,7 +84,7 @@
         ],
         "post-install-cmd": [
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
-            "@install-l10n"        
+            "@install-l10n"
         ],
         "post-update-cmd": [
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
