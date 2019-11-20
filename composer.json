@@ -92,8 +92,7 @@
         ],
         "theme-settings": [
             "mv web/sites/all/libraries/org.civicrm.shoreditch web/sites/all/modules/contrib/civicrm/ext",
-            "cd web/sites/all/modules/contrib/civicrm/ext/org.civicrm.shoreditch",
-            "git checkout v0.1-alpha32"
+            "cd web/sites/all/modules/contrib/civicrm/ext/org.civicrm.shoreditch; git checkout 'v0.1-alpha32'"
         ],
         "pre-install-cmd": [
             "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
