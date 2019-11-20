@@ -37,7 +37,7 @@
               "name": "civicrm/shoreditch",
               "version": "v0.1-alpha32",
               "type": "drupal-library",
-              "dist": {
+              "source": {
                  "url": "https://github.com/civicrm/org.civicrm.shoreditch",
                  "type": "git"
               }
