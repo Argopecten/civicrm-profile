@@ -30,6 +30,19 @@
                 "type": "tar"
              }
           }
+        },
+        "shoreditch": {
+           "type": "package",
+           "package": {
+              "name": "civicrm/org.civicrm.shoreditch",
+              "version": "v0.1-alpha32",
+              "type": "drupal-library",
+              "source": {
+                 "url": "https://github.com/civicrm/org.civicrm.shoreditch",
+                 "type": "git",
+                 "reference": "master"
+              }
+           }
       }
     },
     "require": {
@@ -51,6 +64,7 @@
          "webflo/drupal-finder": "^1.0.0",
          "civicrm/civicrm": "5.15.1",
          "civicrm/civicrm_l10n_core": "5.15.1",
+         "civicrm/org.civicrm.shoreditch": "v0.1-alpha32@dev",
          "drupal/admin_menu": "3.0-rc6",
          "drupal/ctools": "1.15",
          "drupal/entity": "1.9",
@@ -76,6 +90,11 @@
             "cp web/sites/all/libraries/civicrm_l10n_core/sql/*.hu_HU.mysql web/sites/all/modules/contrib/civicrm/sql/",
             "rm -rf web/sites/all/libraries/civicrm_l10n_core"
         ],
+        "theme-settings": [
+            "mv web/sites/all/libraries/org.civicrm.shoreditch web/sites/all/modules/contrib/civicrm/ext",
+            "cd web/sites/all/modules/contrib/civicrm/ext/org.civicrm.shoreditch",
+            "git checkout v0.1-alpha32"
+        ],
         "pre-install-cmd": [
             "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
         ],
@@ -84,11 +103,13 @@
         ],
         "post-install-cmd": [
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
-            "@install-l10n"
+            "@install-l10n",
+            "@theme-settings"
         ],
         "post-update-cmd": [
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
-            "@install-l10n"
+            "@install-l10n",
+            "@theme-settings"
         ],
         "post-create-project-cmd": [
             "DrupalProject\\composer\\ScriptHandler::removeInternalFiles"
