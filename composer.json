@@ -39,7 +39,8 @@
               "type": "drupal-library",
               "source": {
                  "url": "https://github.com/civicrm/org.civicrm.shoreditch",
-                 "type": "git"
+                 "type": "git",
+                 "reference": "master" //git branch-name
               }
            }
       }
