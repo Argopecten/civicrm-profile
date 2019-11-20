@@ -40,7 +40,7 @@
               "source": {
                  "url": "https://github.com/civicrm/org.civicrm.shoreditch",
                  "type": "git",
-                 "reference": "master" //git branch-name
+                 "reference": "master"
               }
            }
       }
