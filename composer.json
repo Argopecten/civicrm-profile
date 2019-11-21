@@ -11,10 +11,10 @@
          "type": "package",
          "package": {
             "name": "civicrm/civicrm",
-            "version": "5.19.1",
+            "version": "5.19.2",
             "type": "drupal-module",
             "dist": {
-               "url": "https://download.civicrm.org/civicrm-5.19.1-drupal.tar.gz",
+               "url": "https://download.civicrm.org/civicrm-5.19.2-drupal.tar.gz",
                "type": "tar"
             }
          }
@@ -23,10 +23,10 @@
           "type": "package",
           "package": {
              "name": "civicrm/civicrm_l10n_core",
-             "version": "5.19.1",
+             "version": "5.19.2",
              "type": "drupal-library",
              "dist": {
-                "url": "https://download.civicrm.org/civicrm-5.19.1-l10n.tar.gz",
+                "url": "https://download.civicrm.org/civicrm-5.19.2-l10n.tar.gz",
                 "type": "tar"
              }
           }
@@ -62,8 +62,8 @@
          "drush/drush": "^8.0",
          "symfony/filesystem": "~2.7|^3",
          "webflo/drupal-finder": "^1.0.0",
-         "civicrm/civicrm": "5.19.1",
-         "civicrm/civicrm_l10n_core": "5.19.1",
+         "civicrm/civicrm": "5.19.2",
+         "civicrm/civicrm_l10n_core": "5.19.2",
          "civicrm/org.civicrm.shoreditch": "v0.1-alpha35@dev",
          "drupal/admin_menu": "3.0-rc6",
          "drupal/ctools": "1.15",
