@@ -35,6 +35,45 @@
    $query->execute();
 
    // Enable default permissions for system roles.
+
+   // 1) Anonymous user
+   // used for users that don't have a user account or that are not authenticated
    user_role_grant_permissions(DRUPAL_ANONYMOUS_RID, array('access content'));
-   user_role_grant_permissions(DRUPAL_AUTHENTICATED_RID, array('access content'));
+
+   // 2) Authenticated user
+   // this role is automatically granted to all logged in users
+  user_role_grant_permissions(DRUPAL_AUTHENTICATED_RID, array(
+    'access content',
+  ));
+
+  // 3) Site administrators
+  // the role for site administrators, with all available permissions assigned.
+  $siteadmin_role = new stdClass();
+  $siteadmin_role->name = 'site admin';
+  $siteadmin_role->weight = 2;
+  user_role_save($siteadmin_role);
+  // TODO: filter out CiviCRM permissions and grant the rest to administrator
+  user_role_grant_permissions($siteadmin_role->rid, array_keys(module_invoke_all('permission')));
+
+  // Set this as the administrator role.
+  variable_set('user_admin_role', $siteadmin_role->rid);
+
+  // Assign user 1 the "administrator" role.
+  db_insert('users_roles')
+    ->fields(array(
+    'uid' => 1,
+    'rid' => $siteadmin_role->rid,
+  ))
+    ->execute();
+
+  // 4) CRM administrators
+  // the role for CiviCRM application administrators
+  // CRM permissions cannot be granted here, since civicrm module is not yet enabled
+  $crmadmin_role = new stdClass();
+  $crmadmin_role->name = 'crm admin';
+  $crmadmin_role->weight = 3;
+  user_role_save($crmadmin_role);
+  user_role_grant_permissions($crmadmin_role->rid, array(
+    'access content',
+  ));
  }
