@@ -77,3 +77,57 @@
     'access content',
   ));
  }
+
+ /**
+ * Implements hook_install_tasks().
+ */
+function civicrmprofile_install_tasks($install_state){
+  $tasks = array(
+    'civicrmprofile_permissions' => array(
+      'display_name' => st('Permissions'),
+      'display' => FALSE,
+      'type' => 'normal'
+    ),
+  );
+
+  return $tasks;
+}
+
+/**
+ * Task to configure CRM permissions.
+ */
+function civicrmprofile_permissions() {
+  // revoke CRM permissions from site administrator
+  $siteadmin_role = user_role_load_by_name('site admin');
+  user_role_change_permissions($sitedmin_role->rid,
+     array(
+       'add contacts' => FALSE,
+       'view all contacts' => FALSE,
+       'edit all contacts' => FALSE,
+       'view my contact ' => FALSE,
+       'edit my contact' => FALSE,
+       'delete contacts' => FALSE,
+       'access deleted contacts' => FALSE,
+       'import contacts' => FALSE,
+       'import SQL datasource' => FALSE,
+       'edit groups' => FALSE,
+       'administer CiviCRM' => FALSE,
+       'skip IDS check' => FALSE,
+       'access uploaded files' => FALSE,
+       'profile listings and forms' => FALSE,
+       'profile listings' => FALSE,
+       'profile create' => FALSE,
+       'profile edit' => FALSE,
+      )
+  );
+
+  // grant CRM admin permissions to CRM administrator
+  $crmadmin_role = user_role_load_by_name('crm admin');
+  user_role_change_permissions($crmadmin_role->rid,
+     array(
+       'administer CiviCRM' => TRUE,
+       'access all custom data' => TRUE,
+       'access CiviCRM backend and API' => TRUE,
+      )
+  );
+}
