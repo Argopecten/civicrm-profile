@@ -13,7 +13,7 @@
   *
   * @see system_install()
   */
- function civicrmprofile_install() {
+function civicrmprofile_install() {
    // Enable standard content block only.
    $default_theme = variable_get('theme_default', 'bartik');
    $values = array(
@@ -68,15 +68,28 @@
 
   // 4) CRM administrators
   // the role for CiviCRM application administrators
-  // CRM permissions cannot be granted here, since civicrm module is not yet enabled
   $crmadmin_role = new stdClass();
   $crmadmin_role->name = 'crm admin';
   $crmadmin_role->weight = 3;
   user_role_save($crmadmin_role);
-  user_role_grant_permissions($crmadmin_role->rid, array(
-    'access content',
-  ));
- }
+  // role are granted via drush_hook_post_COMMAND()
+
+  // 5) CRM superusers
+  // the role for CiviCRM data and user manager
+  $superuser_role = new stdClass();
+  $superuser_role->name = 'super user';
+  $superuser_role->weight = 4;
+  user_role_save($superuser_role);
+  // role are granted via drush_hook_post_COMMAND()
+
+  // 6) CRM users
+  // the role for regular CiviCRM users, with ACL
+  $crmuser_role = new stdClass();
+  $crmuser_role->name = 'crm user';
+  $crmuser_role->weight = 5;
+  user_role_save($crmuser_role);
+  // role are granted via drush_hook_post_COMMAND()
+}
 
  /**
  * Implements hook_install_tasks().
@@ -97,37 +110,4 @@ function civicrmprofile_install_tasks($install_state){
  * Task to configure CRM permissions.
  */
 function civicrmprofile_permissions() {
-  // revoke CRM permissions from site administrator
-  $siteadmin_role = user_role_load_by_name('site admin');
-  user_role_change_permissions($sitedmin_role->rid,
-     array(
-       'add contacts' => FALSE,
-       'view all contacts' => FALSE,
-       'edit all contacts' => FALSE,
-       'view my contact ' => FALSE,
-       'edit my contact' => FALSE,
-       'delete contacts' => FALSE,
-       'access deleted contacts' => FALSE,
-       'import contacts' => FALSE,
-       'import SQL datasource' => FALSE,
-       'edit groups' => FALSE,
-       'administer CiviCRM' => FALSE,
-       'skip IDS check' => FALSE,
-       'access uploaded files' => FALSE,
-       'profile listings and forms' => FALSE,
-       'profile listings' => FALSE,
-       'profile create' => FALSE,
-       'profile edit' => FALSE,
-      )
-  );
-
-  // grant CRM admin permissions to CRM administrator
-  $crmadmin_role = user_role_load_by_name('crm admin');
-  user_role_change_permissions($crmadmin_role->rid,
-     array(
-       'administer CiviCRM' => TRUE,
-       'access all custom data' => TRUE,
-       'access CiviCRM backend and API' => TRUE,
-      )
-  );
 }
