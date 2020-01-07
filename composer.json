@@ -132,6 +132,7 @@
         "patches": {
             "cweagans/composer-patches": {
                 "Call the preserve paths hooks" : "https://github.com/SebCorbin/composer-patches/commit/1cb9bacba51f8bba0c5f3f322c3bb61e4ceae974.patch"
+            },
             "drupal/tfa": {
                 "MCrypt and PHP 7.1+" : "https://www.drupal.org/files/issues/2019-06-16/tfa-2820710-54.patch"
             }
