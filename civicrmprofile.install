@@ -14,46 +14,31 @@
   * @see system_install()
   */
 function civicrmprofile_install() {
-   // Enable standard content block only.
-   $default_theme = variable_get('theme_default', 'bartik');
-   $values = array(
-     array(
-       'module' => 'system',
-       'delta' => 'main',
-       'theme' => $default_theme,
-       'status' => 1,
-       'weight' => 0,
-       'region' => 'content',
-       'pages' => '',
-       'cache' => -1,
-     ),
-   );
-   $query = db_insert('block')->fields(array('module', 'delta', 'theme', 'status', 'weight', 'region', 'pages', 'cache'));
-   foreach ($values as $record) {
-     $query->values($record);
-   }
-   $query->execute();
+  // Enable standard content block only.
+  $default_theme = variable_get('theme_default', 'bartik');
+  $values = array(
+    array(
+      'module' => 'system',
+      'delta' => 'main',
+      'theme' => $default_theme,
+      'status' => 1,
+      'weight' => 0,
+      'region' => 'content',
+      'pages' => '',
+      'cache' => -1,
+    ),
+  );
+  $query = db_insert('block')->fields(array('module', 'delta', 'theme', 'status', 'weight', 'region', 'pages', 'cache'));
+  foreach ($values as $record) {
+    $query->values($record);
+  }
+  $query->execute();
 
-   // Enable default permissions for system roles.
-
-   // 1) Anonymous user
-   // used for users that don't have a user account or that are not authenticated
-   user_role_grant_permissions(DRUPAL_ANONYMOUS_RID, array('access content'));
-
-   // 2) Authenticated user
-   // this role is automatically granted to all logged in users
-  user_role_grant_permissions(DRUPAL_AUTHENTICATED_RID, array(
-    'access content',
-  ));
-
-  // 3) Site administrators
-  // the role for site administrators, with all available permissions assigned.
+  // Role for site administrators
   $siteadmin_role = new stdClass();
   $siteadmin_role->name = 'site admin';
   $siteadmin_role->weight = 2;
   user_role_save($siteadmin_role);
-  // TODO: filter out CiviCRM permissions and grant the rest to administrator
-  user_role_grant_permissions($siteadmin_role->rid, array_keys(module_invoke_all('permission')));
 
   // Set this as the administrator role.
   variable_set('user_admin_role', $siteadmin_role->rid);
@@ -65,49 +50,4 @@ function civicrmprofile_install() {
     'rid' => $siteadmin_role->rid,
   ))
     ->execute();
-
-  // 4) CRM administrators
-  // the role for CiviCRM application administrators
-  $crmadmin_role = new stdClass();
-  $crmadmin_role->name = 'crm admin';
-  $crmadmin_role->weight = 3;
-  user_role_save($crmadmin_role);
-  // role are granted via drush_hook_post_COMMAND()
-
-  // 5) CRM superusers
-  // the role for CiviCRM data and user manager
-  $superuser_role = new stdClass();
-  $superuser_role->name = 'super user';
-  $superuser_role->weight = 4;
-  user_role_save($superuser_role);
-  // role are granted via drush_hook_post_COMMAND()
-
-  // 6) CRM users
-  // the role for regular CiviCRM users, with ACL
-  $crmuser_role = new stdClass();
-  $crmuser_role->name = 'crm user';
-  $crmuser_role->weight = 5;
-  user_role_save($crmuser_role);
-  // role are granted via drush_hook_post_COMMAND()
-}
-
- /**
- * Implements hook_install_tasks().
- */
-function civicrmprofile_install_tasks($install_state){
-  $tasks = array(
-    'civicrmprofile_permissions' => array(
-      'display_name' => st('Permissions'),
-      'display' => FALSE,
-      'type' => 'normal'
-    ),
-  );
-
-  return $tasks;
-}
-
-/**
- * Task to configure CRM permissions.
- */
-function civicrmprofile_permissions() {
 }
