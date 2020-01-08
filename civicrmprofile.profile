@@ -20,8 +20,9 @@ function civicrmprofile_install_tasks($install_state){
 }
 
 /**
-* Install task to configure CRM permissions.
-*/
+ * Install task to configure CRM permissions.
+ * Only Drupal core permissions are set here
+ */
 function civicrmprofile_permissions() {
   // drush_log('civicrmprofile d():' . print_r(d(), 1), 'debug');
   $context = d()->context_type;
@@ -39,11 +40,15 @@ function civicrmprofile_permissions() {
     user_role_grant_permissions(DRUPAL_ANONYMOUS_RID, array(
      'access content',
     ));
+    
     // 2) Authenticated users
     // this role is automatically granted to all logged in users
     user_role_grant_permissions(DRUPAL_AUTHENTICATED_RID, array(
       'access content',
+      'change own username',
+      'cancel account',
     ));
+
     // 3) Administrators
     // the role for site administrators, with all available permissions assigned.
     user_role_grant_permissions(variable_get('user_admin_role'), array_keys(module_invoke_all('permission')));
