@@ -2,49 +2,6 @@
     "name": "argopecten/civicrmprofile",
     "type": "drupal-profile",
     "description": "The CiviCRM profile from Argopecten.",
-    "repositories": {
-      "0": {
-          "type": "composer",
-          "url": "https://packages.drupal.org/7"
-      },
-      "1": {
-         "type": "package",
-         "package": {
-            "name": "civicrm/civicrm",
-            "version": "5.20.2",
-            "type": "drupal-module",
-            "dist": {
-               "url": "https://download.civicrm.org/civicrm-5.20.2-drupal.tar.gz",
-               "type": "tar"
-            }
-         }
-       },
-       "l10n": {
-          "type": "package",
-          "package": {
-             "name": "civicrm/civicrm_l10n_core",
-             "version": "5.20.2",
-             "type": "drupal-library",
-             "dist": {
-                "url": "https://download.civicrm.org/civicrm-5.20.2-l10n.tar.gz",
-                "type": "tar"
-             }
-          }
-        },
-        "shoreditch": {
-           "type": "package",
-           "package": {
-              "name": "civicrm/org.civicrm.shoreditch",
-              "version": "v0.1-alpha35",
-              "type": "drupal-library",
-              "source": {
-                 "url": "https://github.com/civicrm/org.civicrm.shoreditch",
-                 "type": "git",
-                 "reference": "master"
-              }
-           }
-      }
-    },
     "require": {
          "php": "7.2.* || 7.3.*",
          "ext-curl": "*",
@@ -84,61 +41,4 @@
     "conflict": {
         "drupal/core": "8.*"
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "config": {
-        "sort-packages": true
-    },
-    "scripts": {
-        "install-l10n": [
-            "mkdir -p web/sites/all/modules/contrib/civicrm/l10n",
-            "cp -r web/sites/all/libraries/civicrm_l10n_core/l10n/hu_HU/ web/sites/all/modules/contrib/civicrm/l10n",
-            "cp web/sites/all/libraries/civicrm_l10n_core/sql/*.hu_HU.mysql web/sites/all/modules/contrib/civicrm/sql/",
-            "rm -rf web/sites/all/libraries/civicrm_l10n_core"
-        ],
-        "theme-settings": [
-            "mv web/sites/all/libraries/org.civicrm.shoreditch web/sites/all/modules/contrib/civicrm/ext",
-            "cd web/sites/all/modules/contrib/civicrm/ext/org.civicrm.shoreditch; git checkout 'v0.1-alpha35'"
-        ],
-        "pre-install-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
-        ],
-        "pre-update-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
-        ],
-        "post-install-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
-            "@install-l10n",
-            "@theme-settings"
-        ],
-        "post-update-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
-            "@install-l10n",
-            "@theme-settings"
-        ],
-        "post-create-project-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::removeInternalFiles"
-        ]
-    },
-    "extra": {
-        "installer-paths": {
-            "web/": ["type:drupal-core"],
-            "web/profiles/{$name}/": ["type:drupal-profile"],
-            "web/sites/all/drush/{$name}/": ["type:drupal-drush"],
-            "web/sites/all/libraries/{$name}/": ["type:drupal-library"],
-            "web/sites/all/modules/contrib/{$name}/": ["type:drupal-module"],
-            "web/sites/all/themes/contrib/{$name}/": ["type:drupal-theme"]
-        },
-        "patches": {
-            "cweagans/composer-patches": {
-                "Call the preserve paths hooks" : "https://github.com/SebCorbin/composer-patches/commit/1cb9bacba51f8bba0c5f3f322c3bb61e4ceae974.patch"
-            },
-            "drupal/tfa": {
-                "MCrypt and PHP 7.1+" : "https://www.drupal.org/files/issues/2019-06-16/tfa-2820710-54.patch"
-            }
-        },
-        "preserve-paths": [
-            "web/sites"
-        ]
-    }
 }
