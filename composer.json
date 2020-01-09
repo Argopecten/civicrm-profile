@@ -40,5 +40,5 @@
     },
     "conflict": {
         "drupal/core": "8.*"
-    },
+    }
 }
