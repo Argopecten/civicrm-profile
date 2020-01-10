@@ -53,7 +53,7 @@
   // Role for site administrators
   $siteadmin_role = new stdClass();
   $siteadmin_role->name = 'site admin';
-  $siteadmin_role->weight = 2;
+  $siteadmin_role->weight = 5;
   user_role_save($siteadmin_role);
 
   // Set this as the administrator role.

@@ -144,7 +144,8 @@ function _drush_civicrmprofile_enable_extensions($extensions) {
 }
 
 // grant basic CRM permissions
-function _drush_civicrmprofile_grant_basic_permissions($role_name) {
+function _drush_civicrmprofile_basic_permissions($role_name) {
+  _drush_civicrmprofile_revoke_all_permissions($role_name);
   drush_invoke('role-add-perm',
     array(
       $role_name,
@@ -158,8 +159,10 @@ function _drush_civicrmprofile_grant_basic_permissions($role_name) {
   );
 }
 
-// grant full CRM user permissions
-function _drush_civicrmprofile_grant_crmuser_permissions($role_name) {
+// grant CRM user permissions
+function _drush_civicrmprofile_crmuser_permissions() {
+  $role_name='crm user';
+  _drush_civicrmprofile_revoke_all_permissions($role_name);
   drush_invoke('role-add-perm',
     array(
       $role_name,
