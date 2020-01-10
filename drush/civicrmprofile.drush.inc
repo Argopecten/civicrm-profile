@@ -181,6 +181,7 @@ function _drush_civicrmprofile_crmuser_permissions() {
         'edit my contact',
         'access CiviCRM',
         'access Contact Dashboard',
+        'edit inbound email basic information',
         'add contact notes',
       )
     )
