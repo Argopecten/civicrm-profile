@@ -40,7 +40,7 @@ function civicrmprofile_permissions() {
     user_role_grant_permissions(DRUPAL_ANONYMOUS_RID, array(
      'access content',
     ));
-    
+
     // 2) Authenticated users
     // this role is automatically granted to all logged in users
     user_role_grant_permissions(DRUPAL_AUTHENTICATED_RID, array(
@@ -52,6 +52,27 @@ function civicrmprofile_permissions() {
     // 3) Administrators
     // the role for site administrators, with all available permissions assigned.
     user_role_grant_permissions(variable_get('user_admin_role'), array_keys(module_invoke_all('permission')));
+
+    // 4) Permissions for CRM users
+    $role = user_role_load_by_name('crm user');
+    user_role_grant_permissions($role->rid, array(
+      'access content',
+    ));
+
+    // 5) Permissions for super users
+    $role = user_role_load_by_name('super user');
+    user_role_grant_permissions($role->rid, array(
+      'administer users',
+      'administer permissions',
+    ));
+
+    // 6) Permissions for CRM admins
+    $role = user_role_load_by_name('crm admin');
+    user_role_grant_permissions($role->rid, array(
+      'administer users',
+      'administer permissions',
+      'access toolbar',
+    ));
 
   } else {
      // something is wrong...
