@@ -85,4 +85,41 @@
   $crmadmin_role->weight = 4;
   user_role_save($crmadmin_role);
 
+  // TFA settings
+  // https://git.drupalcode.org/project/tfa/blob/7.x-2.x/tfa.admin.inc
+
+  // - TFA is enabled
+  variable_set('tfa_enabled', TRUE);
+
+  // Default validation plugin is TOTP
+  variable_set('tfa_validate_plugin', 'tfa_basic_totp');
+
+  // Fallback plugins are recovery codes and help page
+  variable_set('tfa_fallback_plugins',
+    array(
+      '-999' => 'tfa_basic_totp',
+      '0'    => 'tfa_basic_recovery_code',
+      '10'   => 'tfa_basic_help',
+    )
+  );
+
+  // trusted browser plugin
+  variable_set('tfa_login_plugins',
+    array(
+      'tfa_basic_trusted_browser',
+    )
+  );
+
+  // roles required to have set up TFA
+  //   - 1 is for authenticated users
+  //   - 2 is for site admins
+  variable_set('tfa_basic_roles_require',
+    array(
+      '3' => '3',
+      '4' => '4',
+      '5' => '5',
+      '6' => '6',
+    )
+  );
+
 }
