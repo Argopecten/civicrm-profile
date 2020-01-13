@@ -66,4 +66,7 @@
     'rid' => $siteadmin_role->rid,
   ))
     ->execute();
+
+  // Only admin can register new users.
+  variable_set('user_register', USER_REGISTER_ADMINISTRATORS_ONLY);
 }
