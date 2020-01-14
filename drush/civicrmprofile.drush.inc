@@ -172,7 +172,6 @@ function _drush_civicrmprofile_superuser_permissions() {
         'view all notes',
         'add contact notes',
         'edit inbound email basic information',
-        'add contact notes',
       )
     )
   );
