@@ -40,13 +40,14 @@ function civicrmprofile_permissions() {
     user_role_grant_permissions(DRUPAL_ANONYMOUS_RID, array(
      'access content',
     ));
-    
+
     // 2) Authenticated users
     // this role is automatically granted to all logged in users
     user_role_grant_permissions(DRUPAL_AUTHENTICATED_RID, array(
       'access content',
       'change own username',
       'cancel account',
+      'Set up TFA for account',
     ));
 
     // 3) Administrators
