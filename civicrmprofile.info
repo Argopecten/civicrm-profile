@@ -36,5 +36,4 @@ dependencies[] = jquery_update
 ; modules to be enabled for 2FA
 dependencies[] = tfa_basic
 dependencies[] = tfa_rules
-dependencies[] = redirect
 dependencies[] = rules_admin
