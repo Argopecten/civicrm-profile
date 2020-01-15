@@ -32,3 +32,4 @@ dependencies[] = ctools
 dependencies[] = views
 dependencies[] = admin_menu
 dependencies[] = jquery_update
+dependencies[] = role_delegation

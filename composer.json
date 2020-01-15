@@ -23,6 +23,7 @@
          "civicrm/civicrm_l10n_core": "5.22.1",
          "civicrm/org.civicrm.shoreditch": "0.1.0-alpha.36@dev",
          "eileenmcnaughton/nz.co.fuzion.csvimport": "1.5",
+         "drupal/role_delegation": "1.2",
          "drupal/admin_menu": "3.0-rc6",
          "drupal/ctools": "1.15",
          "drupal/entity": "1.9",
