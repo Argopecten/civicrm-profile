@@ -38,3 +38,4 @@ dependencies[] = tfa_basic
 dependencies[] = tfa_rules
 dependencies[] = redirect
 dependencies[] = rules_admin
+dependencies[] = role_delegation
