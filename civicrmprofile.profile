@@ -47,7 +47,7 @@ function civicrmprofile_permissions() {
       'access content',
       'change own username',
       'cancel account',
-      'Set up TFA for account',
+      'setup own tfa',
     ));
 
     // 3) Administrators
