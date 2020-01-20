@@ -64,7 +64,6 @@ function civicrmprofile_permissions() {
     $role = user_role_load_by_name('super user');
     user_role_grant_permissions($role->rid, array(
       'administer users',
-      'administer permissions',
       'assign crm user role',
       'assign super user role',
     ));
@@ -73,11 +72,9 @@ function civicrmprofile_permissions() {
     $role = user_role_load_by_name('crm admin');
     user_role_grant_permissions($role->rid, array(
       'administer users',
-      'administer permissions',
       'assign crm user role',
       'assign super user role',
       'assign crm admin role',
-      'access toolbar',
     ));
 
   } else {
