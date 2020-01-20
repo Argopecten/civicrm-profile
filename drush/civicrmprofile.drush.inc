@@ -38,6 +38,7 @@ function drush_civicrmprofile_post_provision_install() {
  *
  * functions:
  *   - grants CRM permissions during site verification
+ *   - enable CiviCRM components and extensions
  *
  */
 function drush_civicrmprofile_post_provision_verify() {
@@ -48,19 +49,56 @@ function drush_civicrmprofile_post_provision_verify() {
     // do nothing
   } elseif ($context === "site") {
 
-    $role_name='anonymous user';
-    // grant basic CRM permissions to anonymous user
-    _drush_civicrmprofile_grant_basic_permissions($role_name);
+    // enable CiviCRM components
+    \Civi\Api4\Setting::set()
+      ->addValue('enable_components', [
+        'CiviMail',
+        'CiviCase',
+        'CiviReport',
+      ])
+      ->setCheckPermissions(FALSE)
+      ->execute();
 
-    $role_name='authenticated user';
-    // grant basic CRM permissions to authenticated user
+    // Enable CiviCRM extensions
+    $extensions = array(
+      'org.civicrm.shoreditch',
+      'nz.co.fuzion.csvimport',
+    );
+    _drush_civicrmprofile_enable_extensions($extensions);
+
+    // grant basic CRM permissions to anonymous user
+    $role_name='anonymous user';
     _drush_civicrmprofile_grant_basic_permissions($role_name);
-    // grant full CRM user permissions to authenticated user
+    // grant CRM permissions to authenticated user
+    $role_name='authenticated user';
+    _drush_civicrmprofile_grant_basic_permissions($role_name);
     _drush_civicrmprofile_grant_crmuser_permissions($role_name);
 
   } else {
     // something is wrong...
     drush_log('wrong context at drush_civicrmprofile_post_provision_verify: ' . $context, 'warning');
+  }
+}
+
+// Enable CiviCRM extensions
+function _drush_civicrmprofile_enable_extensions($extensions) {
+  // download is via composer
+  foreach ($extensions as $key => $ext) {
+    try{
+      civicrm_api3('Extension', 'enable', ['key' => $ext,]);
+    }
+    catch (CiviCRM_API3_Exception $e) {
+      $errorMessage = $e->getMessage();
+      $errorCode = $e->getErrorCode();
+      $errorData = $e->getExtraParams();
+      $result = array(
+        'is_error' => 1,
+        'error_message' => $errorMessage,
+        'error_code' => $errorCode,
+        'error_data' => $errorData,
+      );
+      drush_log('civicrmprofile enable_extensions:' . print_r($result, 1), 'warning');
+    }
   }
 }
 
