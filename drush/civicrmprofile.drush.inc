@@ -245,7 +245,7 @@ function _drush_civicrmprofile_crmcommunicator_permissions() {
       array(
         'edit message templates',
         'edit user-driven message templates',
-        'send SMS'
+        'send SMS',
         'access CiviMail',
         'access CiviMail subscribe/unsubscribe pages',
         'delete in CiviMail',
