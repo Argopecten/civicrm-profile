@@ -53,7 +53,7 @@
   // Role for site administrators
   $siteadmin_role = new stdClass();
   $siteadmin_role->name = 'site admin';
-  $siteadmin_role->weight = 2;
+  $siteadmin_role->weight = 5;
   user_role_save($siteadmin_role);
 
   // Set this as the administrator role.
@@ -66,4 +66,62 @@
     'rid' => $siteadmin_role->rid,
   ))
     ->execute();
+
+  // Only admin can register new users.
+  variable_set('user_register', USER_REGISTER_ADMINISTRATORS_ONLY);
+
+  // Role for CRM users
+  $crmuser_role = new stdClass();
+  $crmuser_role->name = 'crm user';
+  $crmuser_role->weight = 2;
+  user_role_save($crmuser_role);
+
+  // Role for super users
+  $superuser_role = new stdClass();
+  $superuser_role->name = 'super user';
+  $superuser_role->weight = 3;
+  user_role_save($superuser_role);
+
+  // Role for CRM admins
+  $crmadmin_role = new stdClass();
+  $crmadmin_role->name = 'crm admin';
+  $crmadmin_role->weight = 4;
+  user_role_save($crmadmin_role);
+
+  // TFA settings
+  // https://git.drupalcode.org/project/tfa/blob/7.x-2.x/tfa.admin.inc
+
+  // - TFA is enabled
+  variable_set('tfa_enabled', TRUE);
+
+  // Default validation plugin is TOTP
+  variable_set('tfa_validate_plugin', 'tfa_basic_totp');
+
+  // Fallback plugins are recovery codes and help page
+  variable_set('tfa_fallback_plugins',
+    array(
+      '-999' => 'tfa_basic_totp',
+      '0'    => 'tfa_basic_recovery_code',
+      '10'   => 'tfa_basic_help',
+    )
+  );
+
+  // trusted browser plugin
+  variable_set('tfa_login_plugins',
+    array(
+      'tfa_basic_trusted_browser',
+    )
+  );
+
+  // roles required to have set up TFA
+  variable_set('tfa_basic_roles_require',
+    array(
+      '2' => '0',
+      '3' => '0',
+      '4' => '4',
+      '5' => '5',
+      '6' => '6',
+    )
+  );
+
 }
