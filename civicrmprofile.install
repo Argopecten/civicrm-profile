@@ -50,44 +50,6 @@
    }
    $query->execute();
 
-  // Role for site administrators
-  $siteadmin_role = new stdClass();
-  $siteadmin_role->name = 'site admin';
-  $siteadmin_role->weight = 5;
-  user_role_save($siteadmin_role);
-
-  // Set this as the administrator role.
-  variable_set('user_admin_role', $siteadmin_role->rid);
-
-  // Assign user 1 the "administrator" role.
-  db_insert('users_roles')
-    ->fields(array(
-    'uid' => 1,
-    'rid' => $siteadmin_role->rid,
-  ))
-    ->execute();
-
-  // Only admin can register new users.
-  variable_set('user_register', USER_REGISTER_ADMINISTRATORS_ONLY);
-
-  // Role for CRM users
-  $crmuser_role = new stdClass();
-  $crmuser_role->name = 'crm user';
-  $crmuser_role->weight = 2;
-  user_role_save($crmuser_role);
-
-  // Role for super users
-  $superuser_role = new stdClass();
-  $superuser_role->name = 'super user';
-  $superuser_role->weight = 3;
-  user_role_save($superuser_role);
-
-  // Role for CRM admins
-  $crmadmin_role = new stdClass();
-  $crmadmin_role->name = 'crm admin';
-  $crmadmin_role->weight = 4;
-  user_role_save($crmadmin_role);
-
   // TFA settings
   // https://git.drupalcode.org/project/tfa/blob/7.x-2.x/tfa.admin.inc
 
@@ -113,14 +75,82 @@
     )
   );
 
+}
+
+function civicrmprofile_update_7000() {
+  // Role for site administrators
+  $siteadmin_role=user_role_load_by_name('administrator');
+  if ( (bool) $siteadmin_role) {
+    // There is alredy an administrator
+  } else {
+    $siteadmin_role = new stdClass();
+    // Assign user 1 the "administrator" role.
+    db_insert('users_roles')
+      ->fields(array(
+      'uid' => 1,
+      'rid' => $siteadmin_role->rid,
+    ))
+      ->execute();
+    // Set this as the administrator role.
+    variable_set('user_admin_role', $siteadmin_role->rid);
+  }
+  $siteadmin_role->name = 'site admin';
+  $siteadmin_role->weight = 5;
+  user_role_save($siteadmin_role);
+
+  // Role of crm admins
+  $role=user_role_load_by_name('crm_admin');
+  if ( !(bool) $role) { $role = new stdClass(); }
+  $role->name = 'crm admin';
+  $role->weight = 4;
+  user_role_save($role);
+
+  // Role of super users
+  $role=user_role_load_by_name('crm_superuser');
+  if ( !(bool) $role) { $role = new stdClass(); }
+  $role->name = 'super user';
+  $role->weight = 3;
+  user_role_save($role);
+
+  // Role of crm users
+  $role=user_role_load_by_name('crm_user');
+  if ( !(bool) $role) { $role = new stdClass(); }
+  $role->name = 'crm user';
+  $role->weight = 2;
+  user_role_save($role);
+
+  // Role of crm coordinators
+  $role=user_role_load_by_name('crm_coord');
+  if ( !(bool) $role) { $role = new stdClass(); }
+  $role->name = 'crm coord';
+  $role->weight = 6;
+  user_role_save($role);
+
+  // Role of crm communicators
+  $role=user_role_load_by_name('crm_comm');
+  if ( !(bool) $role) { $role = new stdClass(); }
+  $role->name = 'crm comm';
+  $role->weight = 7;
+  user_role_save($role);
+
+  // Role of crm analysts
+  $role=user_role_load_by_name('crm_analyst');
+  if ( !(bool) $role) { $role = new stdClass(); }
+  $role->name = 'crm analyst';
+  $role->weight = 8;
+  user_role_save($role);
+
   // roles required to have set up TFA
   variable_set('tfa_basic_roles_require',
     array(
       '2' => '0',
       '3' => '0',
       '4' => '4',
-      '5' => '5',
       '6' => '6',
+      '7' => '7',
+      '8' => '8',
+      '9' => '9',
+      '10' => '10',
     )
   );
 

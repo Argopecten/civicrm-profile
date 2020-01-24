@@ -2,7 +2,7 @@ name = CiviCRM
 
 ; name of old install profile
 ;  use it when a site has to be migrated from a D7 standard profile
-; old_short_name = standard
+old_short_name = standard
 
 description = Install and enable the <i>CiviCRM</i> modules and themes.
 core = 7.x
@@ -38,3 +38,7 @@ dependencies[] = tfa_basic
 dependencies[] = tfa_rules
 dependencies[] = rules_admin
 dependencies[] = role_delegation
+
+; lemp only modules
+dependencies[] = password_policy
+dependencies[] = redirect
