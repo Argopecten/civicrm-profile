@@ -76,24 +76,19 @@
   );
 
   // Role for site administrators
-  $siteadmin_role=user_role_load_by_name('administrator');
-  if ( (bool) $siteadmin_role) {
-    // There is alredy an administrator
-  } else {
-    $siteadmin_role = new stdClass();
-    // Assign user 1 the "administrator" role.
-    db_insert('users_roles')
-      ->fields(array(
-      'uid' => 1,
-      'rid' => $siteadmin_role->rid,
+  $role = new stdClass();
+  $role->name = 'site admin';
+  $role->weight = 5;
+  user_role_save($role);
+  // Set this as the administrator role.
+  variable_set('user_admin_role', $role->rid);
+  // Assign user 1 the "administrator" role.
+  db_insert('users_roles')
+    ->fields(array(
+    'uid' => 1,
+    'rid' => $role->rid,
     ))
-      ->execute();
-    // Set this as the administrator role.
-    variable_set('user_admin_role', $siteadmin_role->rid);
-  }
-  $siteadmin_role->name = 'site admin';
-  $siteadmin_role->weight = 5;
-  user_role_save($siteadmin_role);
+    ->execute();
 
   // Role of crm admins
   $role = new stdClass();
@@ -101,16 +96,18 @@
   $role->weight = 4;
   user_role_save($role);
 
+  // Dummy role, for compatibility reasons only
+  // it skips rid=5
+  $role = new stdClass();
+  $role->name = 'dummy user';
+  $role->weight = 9;
+  user_role_save($role);
+  user_role_delete('dummy user');
+
   // Role of super users
   $role = new stdClass();
   $role->name = 'super user';
   $role->weight = 3;
-  user_role_save($role);
-
-  // Role of crm users
-  $role = new stdClass();
-  $role->name = 'crm user';
-  $role->weight = 2;
   user_role_save($role);
 
   // Role of crm coordinators
@@ -129,6 +126,12 @@
   $role = new stdClass();
   $role->name = 'crm analyst';
   $role->weight = 8;
+  user_role_save($role);
+
+  // Role of crm users
+  $role = new stdClass();
+  $role->name = 'crm user';
+  $role->weight = 2;
   user_role_save($role);
 
   // roles (rids) required to have TFA
