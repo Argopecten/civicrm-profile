@@ -66,6 +66,9 @@ function civicrmprofile_permissions() {
       'administer users',
       'assign crm user role',
       'assign super user role',
+      'assign crm coord role',
+      'assign crm comm role',
+      'assign crm analyst role',
     ));
 
     // 6) Permissions for CRM admins
@@ -75,6 +78,9 @@ function civicrmprofile_permissions() {
       'assign crm user role',
       'assign super user role',
       'assign crm admin role',
+      'assign crm coord role',
+      'assign crm comm role',
+      'assign crm analyst role',
     ));
 
   } else {

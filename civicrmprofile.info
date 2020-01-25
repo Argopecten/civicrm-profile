@@ -38,3 +38,7 @@ dependencies[] = tfa_basic
 dependencies[] = tfa_rules
 dependencies[] = rules_admin
 dependencies[] = role_delegation
+
+; lemp only modules
+dependencies[] = password_policy
+dependencies[] = redirect
