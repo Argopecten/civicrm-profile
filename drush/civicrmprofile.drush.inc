@@ -108,6 +108,7 @@ function _drush_civicrmprofile_grant_basic_permissions($role_name) {
     array(
       $role_name,
       array(
+        'access CiviMail subscribe/unsubscribe pages',
         'access uploaded files',
         'profile create',
         'profile view',
