@@ -144,6 +144,9 @@ function _drush_civicrmprofile_grant_crmuser_permissions($role_name) {
         'manage tags',
         'administer Tagsets',
         'view all notes',
+        'access CiviMail',
+        'access CiviCase',
+        'access CiviReport',
       )
     )
   );
