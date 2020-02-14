@@ -39,6 +39,7 @@ function drush_civicrmprofile_post_provision_install() {
  * functions:
  *   - grants CRM permissions during site verification
  *   - enable CiviCRM components and extensions
+ *   - set various CRM options: display, name format, ...
  *
  */
 function drush_civicrmprofile_post_provision_verify() {
@@ -73,6 +74,9 @@ function drush_civicrmprofile_post_provision_verify() {
     $role_name='authenticated user';
     _drush_civicrmprofile_grant_basic_permissions($role_name);
     _drush_civicrmprofile_grant_crmuser_permissions($role_name);
+
+    // set various CRM options: display, name format, ...
+    _drush_civicrmprofile_set_crm_options();
 
   } else {
     // something is wrong...
@@ -152,4 +156,94 @@ function _drush_civicrmprofile_grant_crmuser_permissions($role_name) {
   );
 }
 
+/**
+ * _drush_civicrmprofile_set_crm_options()
+ *
+ * set various CRM options: display, name format, ...
+ * settings:
+ *   - contact options
+ *   - mobile phone providers for HU
+ *   - phone types
+ *   - individual prefixes
+ */
+function _drush_civicrmprofile_set_crm_options() {
+  // 1) contact options
+  \Civi\Api4\Setting::set()
+    ->addValue('contact_view_options', [1, 2, 3, 4, 5, 6, 10, 14, ])
+    ->addValue('contact_edit_options', [12, 14, 15, 16, 7, 8, 5, 1, 2, 3, 4, 6, ])
+    ->addValue('user_dashboard_options', [1, 5, 9, ])
+    ->addValue('display_name_format', '{contact.individual_prefix}{ }{contact.last_name}{ }{contact.first_name}')
+    ->setCheckPermissions(FALSE)
+    ->execute();
+
+  // 2) Mobile phone providers
+  \Civi\Api4\OptionValue::update()
+    ->addWhere('option_group_id', '=', 5)
+    ->addWhere('value', '=', 1)
+    ->addValue('label', 'T-Mobile')
+    ->addValue('name',  'T-Mobile')
+    ->setCheckPermissions(FALSE)
+    ->execute();
+  \Civi\Api4\OptionValue::update()
+    ->addWhere('option_group_id', '=', 5)
+    ->addWhere('value', '=', 2)
+    ->addValue('label', 'Vodafone')
+    ->addValue('name',  'Vodafone')
+    ->setCheckPermissions(FALSE)
+    ->execute();
+  \Civi\Api4\OptionValue::update()
+    ->addWhere('option_group_id', '=', 5)
+    ->addWhere('value', '=', 3)
+    ->addValue('label', 'Telenor')
+    ->addValue('name',  'Telenor')
+    ->setCheckPermissions(FALSE)
+    ->execute();
+
+  // 3) phone types
+  \Civi\Api4\OptionValue::delete()
+    ->addWhere('option_group_id', '=', 35)
+    ->addWhere('id', '>=', 333)
+    ->setCheckPermissions(FALSE)
+    ->execute();
+  \Civi\Api4\OptionValue::update()
+    ->addWhere('option_group_id', '=', 35)
+    ->addWhere('value', '=', 2)
+    ->addValue('label', 'Mobil')
+    ->addValue('name', 'Mobil')
+    ->addValue('is_default', 1)
+    ->setCheckPermissions(FALSE)
+    ->execute();
+  \Civi\Api4\OptionValue::update()
+    ->addWhere('option_group_id', '=', 35)
+    ->addWhere('value', '=', 1)
+    ->addValue('label', 'Vezetékes')
+    ->addValue('name', 'Vezetékes')
+    ->addValue('is_default', 0)
+    ->setCheckPermissions(FALSE)
+    ->execute();
+
+  // 4) contact prefixes
+  \Civi\Api4\OptionValue::update()
+    ->addWhere('option_group_id', '=', 6)
+    ->addWhere('value', '=', 1)
+    ->addValue('label', 'özv.')
+    ->addValue('name', 'özv.')
+    ->setCheckPermissions(FALSE)
+    ->execute();
+  \Civi\Api4\OptionValue::update()
+    ->addWhere('option_group_id', '=', 6)
+    ->addWhere('value', '=', 2)
+    ->addValue('label', 'ifj.')
+    ->addValue('name', 'ifj.')
+    ->setCheckPermissions(FALSE)
+    ->execute();
+  \Civi\Api4\OptionValue::update()
+    ->addWhere('option_group_id', '=', 6)
+    ->addWhere('value', '=', 3)
+    ->addValue('label', 'prof.')
+    ->addValue('name', 'prof.')
+    ->setCheckPermissions(FALSE)
+    ->execute();
+
+}
 ?>
