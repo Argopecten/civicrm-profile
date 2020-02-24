@@ -236,11 +236,6 @@ function _drush_civicrmprofile_set_crm_options() {
     ->execute();
 
   // 3) phone types
-  \Civi\Api4\OptionValue::delete()
-    ->addWhere('option_group_id', '=', 35)
-    ->addWhere('id', '>=', 333)
-    ->setCheckPermissions(FALSE)
-    ->execute();
   \Civi\Api4\OptionValue::update()
     ->addWhere('option_group_id', '=', 35)
     ->addWhere('value', '=', 2)
@@ -255,6 +250,12 @@ function _drush_civicrmprofile_set_crm_options() {
     ->addValue('label', 'Vezetékes')
     ->addValue('name', 'Vezetékes')
     ->addValue('is_default', 0)
+    ->setCheckPermissions(FALSE)
+    ->execute();
+  \Civi\Api4\OptionValue::update()
+    ->addWhere('option_group_id', '=', 35)
+    ->addWhere('id', '>=', 333)
+    ->addValue('is_active', 0)
     ->setCheckPermissions(FALSE)
     ->execute();
 
