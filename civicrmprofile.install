@@ -70,3 +70,15 @@
   // Only admin can register new users.
   variable_set('user_register', USER_REGISTER_ADMINISTRATORS_ONLY);
 }
+
+/**
+ * Implements hook_modules_installed.
+ *
+ * it gives all other modules a chance to perform actions when a module is installed
+ * API doc: This hook should be implemented in the .module file!
+ *
+ */
+function civicrmprofile_modules_installed($modules) {
+  // drush_log('It"s the civicrmprofile_modules_installed hook', 'debug');
+  // just a spaceholder for now
+}
