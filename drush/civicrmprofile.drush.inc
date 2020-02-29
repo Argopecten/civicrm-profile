@@ -221,6 +221,40 @@ function _drush_civicrmprofile_superuser_permissions() {
     )
   );
 }
+
+// grant CRM admin permissions
+function _drush_civicrmprofile_crmadmin_permissions() {
+  $role_name='crm admin';
+  _drush_civicrmprofile_revoke_all_permissions($role_name);
+  drush_invoke('role-add-perm',
+    array(
+      $role_name,
+      array(
+        'add contacts',
+        'view my contact',
+        'edit my contact',
+        'administer CiviCRM',
+        'access Contact Dashboard',
+        'add contact notes',
+        'administer reserved tags',
+        'administer reserved groups',
+        'edit message templates',
+        'edit user-driven message templates',
+      )
+    )
+  );
+}
+
+// revoke all CRM permissions
+function _drush_civicrmprofile_revoke_all_permissions($role_name) {
+  // all permissions from CiviCRM
+  $all_crm_perms = module_invoke("CiviCRM", 'permission');
+
+  // drush_log('revoke permissions from ' . $role_name . ' CRM perms:' . print_r($all_crm_perms, TRUE), 'debug');
+  // revoke permissions
+  drush_invoke('role-remove-perm',array($role_name, array_keys($all_crm_perms)));
+}
+
 /**
  * _drush_civicrmprofile_set_crm_options()
  *
