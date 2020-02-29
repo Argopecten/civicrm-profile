@@ -13,7 +13,7 @@
   *
   * @see system_install()
   */
- function civicrmprofile_install() {
+function civicrmprofile_install() {
    // set default theme other then bartik
    $enable = array(
      'theme_default' => 'bootstrap',
@@ -147,6 +147,7 @@
       '10' => '10',
     )
   );
+}
 
 /**
  * Implements hook_modules_installed.
