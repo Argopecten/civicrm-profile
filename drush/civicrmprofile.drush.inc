@@ -1,10 +1,9 @@
 <?php
 
 /**
- * 2 functions to implement drush_hook_post_COMMAND().
- *
- *   - drush_civicrmprofile_post_provision_install()
- *   - drush_civicrmprofile_post_provision_verify()
+ * functions to implement drush_hook_post_COMMAND() for:
+ *   - provision-install
+ *   - provision-verify
  *
  * CiviCRM modules are not yet enabled when .install file runs,
  * so CRM configuration will be done here, via drush hook allowing
@@ -12,17 +11,32 @@
  *
  */
 
-/**
- * drush_civicrmprofile_post_provision_install()
- *
- * called after Drupal modules enabled, but before CiviCRM setup
- * just a spaceholder for now
- *
- */
+ /**
+  * impplementation of provision-install hooks
+  *   3 hooks for the drush command 'provision-install
+  *   drush_civicrmprofile_pre_provision_install():
+  *      called before the install task, no site/ directory yet
+  *   drush_civicrmprofile_provision_install():
+  *      called after site/ directory deployed, but before Drupal site install
+  *   drush_civicrmprofile_post_provision_install():
+  *      called after Drupal modules enabled, but before CiviCRM setup
+  *
+  */
+function drush_civicrmprofile_pre_provision_install() {
+  // just a spaceholder for now
+  // drush_log('It"s the drush_civicrmprofile_pre_provision_install hook', 'debug');
+}
+
+function drush_civicrmprofile_provision_install() {
+  // just a spaceholder for now
+  // drush_log('It"s the drush_civicrmprofile_provision_install hook', 'debug');
+}
+
 function drush_civicrmprofile_post_provision_install() {
+  // just a spaceholder for now
   // drush_log('civicrmprofile d():' . print_r(d(), 1), 'debug');
   $context = d()->context_type;
-  drush_log('context_type: ' . $context, 'debug');
+  // drush_log('context_type: ' . $context, 'debug');
   if ($context === "platform") {
     // do nothing
   } elseif ($context === "site") {
@@ -32,6 +46,28 @@ function drush_civicrmprofile_post_provision_install() {
     drush_log('wrong context at drush_civicrmprofile_post_provision_install: ' . $context, 'warning');
   }
 }
+
+/**
+ * impplementation of provision-verify hooks
+ *   3 hooks for the drush command 'provision-verify
+ *   drush_civicrmprofile_pre_provision_verify():
+ *      called before the install task, no site/ directory yet
+ *   drush_civicrmprofile_provision_verify():
+ *      called after site/ directory deployed, but before Drupal site install
+ *   drush_civicrmprofile_post_provision_verify():
+ *      called after Drupal modules enabled, but before CiviCRM setup
+ *
+ */
+
+ function drush_civicrmprofile_pre_provision_verify() {
+   // just a spaceholder for now
+   // drush_log('It"s the drush_civicrmprofile_pre_provision_verify hook', 'debug');
+ }
+
+ function drush_civicrmprofile_provision_verify() {
+   // just a spaceholder for now
+   // drush_log('It"s the drush_civicrmprofile_provision_verify hook', 'debug');
+ }
 
 /**
  * drush_civicrmprofile_post_provision_verify()
@@ -96,6 +132,9 @@ function drush_civicrmprofile_post_provision_verify() {
     // revoke all CRM permissions from site admin
     _drush_civicrmprofile_revoke_all_permissions('site admin');
 
+    // set various CRM options: display, name format, ...
+    _drush_civicrmprofile_set_crm_options();
+
   } else {
     // something is wrong...
     drush_log('wrong context at drush_civicrmprofile_post_provision_verify: ' . $context, 'warning');
@@ -131,6 +170,7 @@ function _drush_civicrmprofile_basic_permissions($role_name) {
     array(
       $role_name,
       array(
+        'access CiviMail subscribe/unsubscribe pages',
         'access uploaded files',
         'profile create',
         'profile view',
@@ -152,6 +192,7 @@ function _drush_civicrmprofile_crmuser_permissions() {
         'edit my contact',
         'access CiviCRM',
         'access Contact Dashboard',
+        'edit inbound email basic information',
         'add contact notes',
       )
     )
@@ -230,6 +271,9 @@ function _drush_civicrmprofile_crmcoordinator_permissions() {
         'register for events',
         'release campaign contacts',
         'reserve campaign contacts',
+        'access CiviMail',
+        'access my cases and activities',
+        'access CiviReport',
       )
     )
   );
@@ -282,4 +326,95 @@ function _drush_civicrmprofile_revoke_all_permissions($role_name) {
 
 }
 
+/**
+ * _drush_civicrmprofile_set_crm_options()
+ *
+ * set various CRM options: display, name format, ...
+ * settings:
+ *   - contact options
+ *   - mobile phone providers for HU
+ *   - phone types
+ *   - individual prefixes
+ */
+function _drush_civicrmprofile_set_crm_options() {
+  // 1) contact options
+  \Civi\Api4\Setting::set()
+    ->addValue('contact_view_options', [1, 2, 3, 4, 5, 6, 10, 14, ])
+    ->addValue('contact_edit_options', [12, 14, 15, 16, 7, 8, 5, 1, 2, 3, 4, 6, ])
+    ->addValue('user_dashboard_options', [1, 5, 9, ])
+    ->addValue('display_name_format', '{contact.individual_prefix}{ }{contact.last_name}{ }{contact.first_name}')
+    ->setCheckPermissions(FALSE)
+    ->execute();
+
+  // 2) Mobile phone providers
+  \Civi\Api4\OptionValue::update()
+    ->addWhere('option_group_id', '=', 5)
+    ->addWhere('value', '=', 1)
+    ->addValue('label', 'T-Mobile')
+    ->addValue('name',  'T-Mobile')
+    ->setCheckPermissions(FALSE)
+    ->execute();
+  \Civi\Api4\OptionValue::update()
+    ->addWhere('option_group_id', '=', 5)
+    ->addWhere('value', '=', 2)
+    ->addValue('label', 'Vodafone')
+    ->addValue('name',  'Vodafone')
+    ->setCheckPermissions(FALSE)
+    ->execute();
+  \Civi\Api4\OptionValue::update()
+    ->addWhere('option_group_id', '=', 5)
+    ->addWhere('value', '=', 3)
+    ->addValue('label', 'Telenor')
+    ->addValue('name',  'Telenor')
+    ->setCheckPermissions(FALSE)
+    ->execute();
+
+  // 3) phone types
+  \Civi\Api4\OptionValue::update()
+    ->addWhere('option_group_id', '=', 35)
+    ->addWhere('value', '=', 2)
+    ->addValue('label', 'Mobil')
+    ->addValue('name', 'Mobil')
+    ->addValue('is_default', 1)
+    ->setCheckPermissions(FALSE)
+    ->execute();
+  \Civi\Api4\OptionValue::update()
+    ->addWhere('option_group_id', '=', 35)
+    ->addWhere('value', '=', 1)
+    ->addValue('label', 'Vezetékes')
+    ->addValue('name', 'Vezetékes')
+    ->addValue('is_default', 0)
+    ->setCheckPermissions(FALSE)
+    ->execute();
+  \Civi\Api4\OptionValue::update()
+    ->addWhere('option_group_id', '=', 35)
+    ->addWhere('id', '>=', 333)
+    ->addValue('is_active', 0)
+    ->setCheckPermissions(FALSE)
+    ->execute();
+
+  // 4) contact prefixes
+  \Civi\Api4\OptionValue::update()
+    ->addWhere('option_group_id', '=', 6)
+    ->addWhere('value', '=', 1)
+    ->addValue('label', 'özv.')
+    ->addValue('name', 'özv.')
+    ->setCheckPermissions(FALSE)
+    ->execute();
+  \Civi\Api4\OptionValue::update()
+    ->addWhere('option_group_id', '=', 6)
+    ->addWhere('value', '=', 2)
+    ->addValue('label', 'ifj.')
+    ->addValue('name', 'ifj.')
+    ->setCheckPermissions(FALSE)
+    ->execute();
+  \Civi\Api4\OptionValue::update()
+    ->addWhere('option_group_id', '=', 6)
+    ->addWhere('value', '=', 3)
+    ->addValue('label', 'prof.')
+    ->addValue('name', 'prof.')
+    ->setCheckPermissions(FALSE)
+    ->execute();
+
+}
 ?>
