@@ -206,7 +206,7 @@ function _drush_civicrmprofile_grant_crmuser_permissions($role_name) {
 function _drush_civicrmprofile_set_crm_options() {
   // 1) contact options
   \Civi\Api4\Setting::set()
-    ->addValue('contact_view_options', [1, 2, 3, 4, 5, 6, 10, 14, ])
+    ->addValue('contact_view_options', [1, 3, 4, 5, 6, 10, 14, ])
     ->addValue('contact_edit_options', [12, 14, 15, 16, 7, 8, 5, 1, 2, 3, 4, 6, ])
     ->addValue('user_dashboard_options', [1, 5, 9, ])
     ->addValue('display_name_format', '{contact.individual_prefix}{ }{contact.last_name}{ }{contact.first_name}')
@@ -283,5 +283,10 @@ function _drush_civicrmprofile_set_crm_options() {
     ->setCheckPermissions(FALSE)
     ->execute();
 
+  // 5) advanced search options: no relationships (4)
+  \Civi\Api4\Setting::set()
+    ->addValue('advanced_search_options', [ 1, 2, 3, 5, 6, 10, 13, 16, 17, 18, 19, ])
+    ->setCheckPermissions(FALSE)
+    ->execute();
 }
 ?>
