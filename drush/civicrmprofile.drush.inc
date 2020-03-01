@@ -144,8 +144,7 @@ function _drush_civicrmprofile_enable_extensions($extensions) {
 }
 
 // grant basic CRM permissions
-function _drush_civicrmprofile_basic_permissions($role_name) {
-  _drush_civicrmprofile_revoke_all_permissions($role_name);
+function _drush_civicrmprofile_grant_basic_permissions($role_name) {
   drush_invoke('role-add-perm',
     array(
       $role_name,
@@ -159,46 +158,29 @@ function _drush_civicrmprofile_basic_permissions($role_name) {
   );
 }
 
-// grant CRM user permissions
-function _drush_civicrmprofile_crmuser_permissions() {
-  $role_name='crm user';
-  _drush_civicrmprofile_revoke_all_permissions($role_name);
+// grant full CRM user permissions
+function _drush_civicrmprofile_grant_crmuser_permissions($role_name) {
   drush_invoke('role-add-perm',
     array(
       $role_name,
       array(
-        'add contacts',
         'view my contact',
         'edit my contact',
+        'access uploaded files',
+        'profile create',
+        'profile view',
+        'add contacts',
+        'edit inbound email basic information',
         'access CiviCRM',
         'access Contact Dashboard',
-        'edit inbound email basic information',
         'add contact notes',
-      )
-    )
-  );
-}
-
-// grant superuser permissions
-function _drush_civicrmprofile_superuser_permissions() {
-  $role_name='super user';
-  _drush_civicrmprofile_revoke_all_permissions($role_name);
-  drush_invoke('role-add-perm',
-    array(
-      $role_name,
-      array(
-        'add contacts',
         'edit all contacts',
         'delete contacts',
-        'access deleted contacts',
         'import contacts',
-        'access CiviCRM',
-        'access Contact Dashboard',
         'edit groups',
         'profile listings and forms',
         'profile edit',
         'access all custom data',
-        'view all activities',
         'delete activities',
         'manage tags',
         'administer Tagsets',
@@ -224,7 +206,7 @@ function _drush_civicrmprofile_superuser_permissions() {
 function _drush_civicrmprofile_set_crm_options() {
   // 1) contact options
   \Civi\Api4\Setting::set()
-    ->addValue('contact_view_options', [1, 3, 4, 5, 6, 10, 14, ])
+    ->addValue('contact_view_options', [1, 2, 3, 4, 5, 6, 10, 14, ])
     ->addValue('contact_edit_options', [12, 14, 15, 16, 7, 8, 5, 1, 2, 3, 4, 6, ])
     ->addValue('user_dashboard_options', [1, 5, 9, ])
     ->addValue('display_name_format', '{contact.individual_prefix}{ }{contact.last_name}{ }{contact.first_name}')
@@ -301,10 +283,5 @@ function _drush_civicrmprofile_set_crm_options() {
     ->setCheckPermissions(FALSE)
     ->execute();
 
-  // 5) advanced search options: no relationships (4)
-  \Civi\Api4\Setting::set()
-    ->addValue('advanced_search_options', [ 1, 2, 3, 5, 6, 10, 13, 16, 17, 18, 19, ])
-    ->setCheckPermissions(FALSE)
-    ->execute();
 }
 ?>
