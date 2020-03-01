@@ -53,7 +53,7 @@
   // Role for site administrators
   $siteadmin_role = new stdClass();
   $siteadmin_role->name = 'site admin';
-  $siteadmin_role->weight = 2;
+  $siteadmin_role->weight = 5;
   user_role_save($siteadmin_role);
 
   // Set this as the administrator role.
@@ -96,14 +96,16 @@
   );
 
   // roles required to have set up TFA
-  //   - 1 is for authenticated users
-  //   - 2 is for site admins
   variable_set('tfa_basic_roles_require',
     array(
-      '1' => '1',
-      '2' => '2',
+      '2' => '0',
+      '3' => '0',
+      '4' => '4',
+      '5' => '5',
+      '6' => '6',
     )
   );
+
 }
 
 /**
@@ -115,5 +117,42 @@
  */
 function civicrmprofile_modules_installed($modules) {
   // drush_log('It"s the civicrmprofile_modules_installed hook', 'debug');
-  // just a spaceholder for now
+
+  if (in_array('civicrm', $modules)) {
+  // CiviCRM module is installed
+  // drush_log('civicrmprofile_modules_installed: CiviCRM module installed', 'debug');
+
+  // Remove households
+  // 1) disable contact type: UPDATE civicrm_contact_type SET is_active = 0 WHERE name = 'Household';
+  db_update('civicrm_contact_type')
+    ->fields(array('is_active' => 0,))
+    ->condition('name', 'Household')
+    ->execute();
+
+  // 2) disable the Household profile: UPDATE civicrm_uf_group set is_active = 0 where name = 'new_household';
+  db_update('civicrm_uf_group')
+    ->fields(array('is_active' => 0,))
+    ->condition('name', 'new_household')
+    ->execute();
+
+  // 3) relationship types
+  //    delete relationships for households
+  db_delete('civicrm_relationship_type')
+    ->condition(db_or()
+      ->condition('contact_type_a', 'Household')
+      ->condition('contact_type_b', 'Household')
+    )
+    ->execute();
+  //     disable the rest
+  db_update('civicrm_relationship_type')
+    ->fields(array('is_active' => 0,))
+    ->where('1')
+    ->execute();
+
+  // 4) Remove the "New Household" menu item: UPDATE civicrm_navigation set is_active=0 where name='New Household';
+  db_update('civicrm_navigation')
+    ->fields(array('is_active' => 0,))
+    ->condition('name', 'New Household')
+    ->execute();
+  }
 }
