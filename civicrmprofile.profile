@@ -54,6 +54,32 @@ function civicrmprofile_permissions() {
     // the role for site administrators, with all available permissions assigned.
     user_role_grant_permissions(variable_get('user_admin_role'), array_keys(module_invoke_all('permission')));
 
+    // 4) Permissions for CRM users
+    $role = user_role_load_by_name('crm user');
+    user_role_grant_permissions($role->rid, array(
+      'access content',
+    ));
+
+    // 5) Permissions for super users
+    $role = user_role_load_by_name('super user');
+    user_role_grant_permissions($role->rid, array(
+      'administer users',
+      'administer permissions',
+      'assign crm user role',
+      'assign super user role',
+    ));
+
+    // 6) Permissions for CRM admins
+    $role = user_role_load_by_name('crm admin');
+    user_role_grant_permissions($role->rid, array(
+      'administer users',
+      'administer permissions',
+      'assign crm user role',
+      'assign super user role',
+      'assign crm admin role',
+      'access toolbar',
+    ));
+
   } else {
      // something is wrong...
      drush_log('wrong context in civicrmprofile_permissions(): ' . $context, 'warning');
