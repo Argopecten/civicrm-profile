@@ -53,7 +53,7 @@
   // Role for site administrators
   $siteadmin_role = new stdClass();
   $siteadmin_role->name = 'site admin';
-  $siteadmin_role->weight = 5;
+  $siteadmin_role->weight = 2;
   user_role_save($siteadmin_role);
 
   // Set this as the administrator role.
@@ -96,16 +96,14 @@
   );
 
   // roles required to have set up TFA
+  //   - 1 is for authenticated users
+  //   - 2 is for site admins
   variable_set('tfa_basic_roles_require',
     array(
-      '2' => '0',
-      '3' => '0',
-      '4' => '4',
-      '5' => '5',
-      '6' => '6',
+      '1' => '1',
+      '2' => '2',
     )
   );
-
 }
 
 /**
