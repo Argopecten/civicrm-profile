@@ -27,7 +27,6 @@
          "drupal/tfa_basic": "1.1",
          "drupal/tfa_rules": "1.1",
          "drupal/role_delegation": "1.2",
-         "drupal/redirect": "1.0-rc3",
          "drupal/rules": "2.12",
          "drupal/entity": "1.9",
          "drupal/admin_menu": "3.0-rc6",
