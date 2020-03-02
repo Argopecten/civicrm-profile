@@ -96,12 +96,12 @@
   );
 
   // roles required to have set up TFA
-  //   - 1 is for authenticated users
-  //   - 2 is for site admins
+  //   - 2 is for authenticated users
+  //   - 3 is for site admins
   variable_set('tfa_basic_roles_require',
     array(
-      '1' => '1',
       '2' => '2',
+      '3' => '3',
     )
   );
 }
