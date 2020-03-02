@@ -104,11 +104,22 @@ function drush_civicrmprofile_post_provision_verify() {
     _drush_civicrmprofile_enable_extensions($extensions);
 
     // grant basic CRM permissions to anonymous user
-    _drush_civicrmprofile_grant_basic_permissions('anonymous user');
+    _drush_civicrmprofile_basic_permissions('anonymous user');
 
-    // grant all CRM permissions to authenticated user
-    _drush_civicrmprofile_grant_basic_permissions('authenticated user');
-    _drush_civicrmprofile_grant_crmuser_permissions('authenticated user');
+    // grant basic CRM permissions to authenticated user
+    _drush_civicrmprofile_basic_permissions('authenticated user');
+
+    // set basic CRM permissions to CRM user
+    _drush_civicrmprofile_crmuser_permissions();
+
+    // grant full superuser permissions
+    _drush_civicrmprofile_superuser_permissions();
+
+    // grant CRM admin permissions
+    _drush_civicrmprofile_crmadmin_permissions();
+
+    // revoke all CRM permissions from site admin
+    _drush_civicrmprofile_revoke_all_permissions('site admin');
 
     // set various CRM options: display, name format, ...
     _drush_civicrmprofile_set_crm_options();
@@ -142,7 +153,8 @@ function _drush_civicrmprofile_enable_extensions($extensions) {
 }
 
 // grant basic CRM permissions
-function _drush_civicrmprofile_grant_basic_permissions($role_name) {
+function _drush_civicrmprofile_basic_permissions($role_name) {
+  _drush_civicrmprofile_revoke_all_permissions($role_name);
   drush_invoke('role-add-perm',
     array(
       $role_name,
@@ -156,29 +168,45 @@ function _drush_civicrmprofile_grant_basic_permissions($role_name) {
   );
 }
 
-// grant full CRM user permissions
-function _drush_civicrmprofile_grant_crmuser_permissions($role_name) {
+// grant CRM user permissions
+function _drush_civicrmprofile_crmuser_permissions() {
+  $role_name='crm user';
+  _drush_civicrmprofile_revoke_all_permissions($role_name);
   drush_invoke('role-add-perm',
     array(
       $role_name,
       array(
+        'add contacts',
         'view my contact',
         'edit my contact',
-        'access uploaded files',
-        'profile create',
-        'profile view',
-        'add contacts',
-        'edit inbound email basic information',
         'access CiviCRM',
         'access Contact Dashboard',
         'add contact notes',
+      )
+    )
+  );
+}
+
+// grant superuser permissions
+function _drush_civicrmprofile_superuser_permissions() {
+  $role_name='super user';
+  _drush_civicrmprofile_revoke_all_permissions($role_name);
+  drush_invoke('role-add-perm',
+    array(
+      $role_name,
+      array(
+        'add contacts',
         'edit all contacts',
         'delete contacts',
+        'access deleted contacts',
         'import contacts',
+        'access CiviCRM',
+        'access Contact Dashboard',
         'edit groups',
         'profile listings and forms',
         'profile edit',
         'access all custom data',
+        'view all activities',
         'delete activities',
         'manage tags',
         'administer Tagsets',
