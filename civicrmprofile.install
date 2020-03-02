@@ -112,17 +112,24 @@
       'tfa_basic_trusted_browser',
     )
   );
+  
+  // Role for CRM users
+  $crmuser_role = new stdClass();
+  $crmuser_role->name = 'crm user';
+  $crmuser_role->weight = 2;
+  user_role_save($crmuser_role);
 
-  // roles required to have set up TFA
-  variable_set('tfa_basic_roles_require',
-    array(
-      '2' => '0',
-      '3' => '0',
-      '4' => '4',
-      '5' => '5',
-      '6' => '6',
-    )
-  );
+  // Role for super users
+  $superuser_role = new stdClass();
+  $superuser_role->name = 'super user';
+  $superuser_role->weight = 3;
+  user_role_save($superuser_role);
+
+  // Role for CRM admins
+  $crmadmin_role = new stdClass();
+  $crmadmin_role->name = 'crm admin';
+  $crmadmin_role->weight = 4;
+  user_role_save($crmadmin_role);
 
 }
 
