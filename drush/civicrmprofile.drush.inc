@@ -192,7 +192,6 @@ function _drush_civicrmprofile_crmuser_permissions() {
         'edit my contact',
         'access CiviCRM',
         'access Contact Dashboard',
-        'edit inbound email basic information',
         'add contact notes',
       )
     )
@@ -320,10 +319,8 @@ function _drush_civicrmprofile_revoke_all_permissions($role_name) {
   // all permissions from CiviCRM
   $all_crm_perms = module_invoke("CiviCRM", 'permission');
   // drush_log('revoke permissions from ' . $role_name . ' CRM perms:' . print_r($all_crm_perms, TRUE), 'debug');
-
   // revoke permissions
   drush_invoke('role-remove-perm',array($role_name, array_keys($all_crm_perms)));
-
 }
 
 /**
