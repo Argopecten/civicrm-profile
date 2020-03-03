@@ -50,15 +50,16 @@
    }
    $query->execute();
 
-  // Role for site administrators
+  // Roles
+  // by default:' anonymous user' & 'authenticated user'
+
+  // 3. site administrator
   $siteadmin_role = new stdClass();
   $siteadmin_role->name = 'site admin';
   $siteadmin_role->weight = 5;
   user_role_save($siteadmin_role);
-
   // Set this as the administrator role.
   variable_set('user_admin_role', $siteadmin_role->rid);
-
   // Assign user 1 the "administrator" role.
   db_insert('users_roles')
     ->fields(array(
@@ -69,6 +70,25 @@
 
   // Only admin can register new users.
   variable_set('user_register', USER_REGISTER_ADMINISTRATORS_ONLY);
+
+  // 4. CRM users
+  $crmuser_role = new stdClass();
+  $crmuser_role->name = 'crm user';
+  $crmuser_role->weight = 2;
+  user_role_save($crmuser_role);
+
+  //5. super users
+  $superuser_role = new stdClass();
+  $superuser_role->name = 'super user';
+  $superuser_role->weight = 3;
+  user_role_save($superuser_role);
+
+  // 6. CRM admins
+  $crmadmin_role = new stdClass();
+  $crmadmin_role->name = 'crm admin';
+  $crmadmin_role->weight = 4;
+  user_role_save($crmadmin_role);
+
 
   // TFA settings
   // https://git.drupalcode.org/project/tfa/blob/7.x-2.x/tfa.admin.inc
@@ -94,25 +114,18 @@
       'tfa_basic_trusted_browser',
     )
   );
-  
-  // Role for CRM users
-  $crmuser_role = new stdClass();
-  $crmuser_role->name = 'crm user';
-  $crmuser_role->weight = 2;
-  user_role_save($crmuser_role);
 
-  // Role for super users
-  $superuser_role = new stdClass();
-  $superuser_role->name = 'super user';
-  $superuser_role->weight = 3;
-  user_role_save($superuser_role);
-
-  // Role for CRM admins
-  $crmadmin_role = new stdClass();
-  $crmadmin_role->name = 'crm admin';
-  $crmadmin_role->weight = 4;
-  user_role_save($crmadmin_role);
-
+  // roles, identified by rid, required to have set up TFA
+  variable_set('tfa_basic_roles_require',
+    array(
+      '1' => '0',
+      '2' => '0',
+      '3' => '0',
+      '4' => '4',
+      '5' => '5',
+      '6' => '6',
+    )
+  );
 }
 
 /**
