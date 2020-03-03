@@ -394,15 +394,17 @@ function _drush_civicrmprofile_set_crm_options() {
   \Civi\Api4\OptionValue::update()
     ->addWhere('option_group_id', '=', 6)
     ->addWhere('value', '=', 1)
-    ->addValue('label', 'özv.')
-    ->addValue('name', 'özv.')
+    ->addValue('label', 'Dr.')
+    ->addValue('name', 'Dr..')
+    ->addValue('description', 'Doktor')
     ->setCheckPermissions(FALSE)
     ->execute();
   \Civi\Api4\OptionValue::update()
     ->addWhere('option_group_id', '=', 6)
     ->addWhere('value', '=', 2)
-    ->addValue('label', 'ifj.')
-    ->addValue('name', 'ifj.')
+    ->addValue('label', 'özv.')
+    ->addValue('name', 'özv.')
+    ->addValue('description', 'Özvegy')
     ->setCheckPermissions(FALSE)
     ->execute();
   \Civi\Api4\OptionValue::update()
@@ -410,6 +412,15 @@ function _drush_civicrmprofile_set_crm_options() {
     ->addWhere('value', '=', 3)
     ->addValue('label', 'prof.')
     ->addValue('name', 'prof.')
+    ->addValue('description', 'Professzor')
+    ->setCheckPermissions(FALSE)
+    ->execute();
+  \Civi\Api4\OptionValue::update()
+    ->addWhere('option_group_id', '=', 6)
+    ->addWhere('value', '=', 4)
+    ->addValue('label', 'ifj.')
+    ->addValue('name', 'ifj.')
+    ->addValue('description', 'ifjú')
     ->setCheckPermissions(FALSE)
     ->execute();
 
