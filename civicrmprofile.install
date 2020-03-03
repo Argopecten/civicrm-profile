@@ -50,6 +50,72 @@ function civicrmprofile_install() {
    }
    $query->execute();
 
+  // Roles
+  // by default:' anonymous user' & 'authenticated user'
+
+  // 3. site administrator
+  $siteadmin_role = new stdClass();
+  $siteadmin_role->name = 'site admin';
+  $siteadmin_role->weight = 5;
+  user_role_save($siteadmin_role);
+  // Set this as the administrator role.
+  variable_set('user_admin_role', $siteadmin_role->rid);
+  // Assign user 1 the "administrator" role.
+  db_insert('users_roles')
+    ->fields(array(
+    'uid' => 1,
+    'rid' => $siteadmin_role->rid,
+  ))
+    ->execute();
+
+  // Only admin can register new users.
+  variable_set('user_register', USER_REGISTER_ADMINISTRATORS_ONLY);
+
+  // 4. CRM admins
+  $crmadmin_role = new stdClass();
+  $crmadmin_role->name = 'crm admin';
+  $crmadmin_role->weight = 4;
+  user_role_save($crmadmin_role);
+
+  // Dummy role, for compatibility reasons only
+  // it skips rid=5
+  $role = new stdClass();
+  $role->name = 'dummy user';
+  $role->weight = 9;
+  user_role_save($role);
+  user_role_delete('dummy user');
+
+  // 6. super users
+  $role = new stdClass();
+  $role->name = 'super user';
+  $role->weight = 3;
+  user_role_save($role);
+
+  // 7. crm coordinators
+  $role = new stdClass();
+  $role->name = 'crm coord';
+  $role->weight = 6;
+  user_role_save($role);
+
+  // 8. crm communicators
+  $role = new stdClass();
+  $role->name = 'crm comm';
+  $role->weight = 7;
+  user_role_save($role);
+
+  // 9. crm analysts
+  $role = new stdClass();
+  $role->name = 'crm analyst';
+  $role->weight = 8;
+  user_role_save($role);
+
+  // 10. crm users
+  $role = new stdClass();
+  $role->name = 'crm user';
+  $role->weight = 2;
+  user_role_save($role);
+
+
   // TFA settings
   // https://git.drupalcode.org/project/tfa/blob/7.x-2.x/tfa.admin.inc
 
@@ -75,68 +141,10 @@ function civicrmprofile_install() {
     )
   );
 
-  // Role for site administrators
-  $role = new stdClass();
-  $role->name = 'site admin';
-  $role->weight = 5;
-  user_role_save($role);
-  // Set this as the administrator role.
-  variable_set('user_admin_role', $role->rid);
-  // Assign user 1 the "administrator" role.
-  db_insert('users_roles')
-    ->fields(array(
-    'uid' => 1,
-    'rid' => $role->rid,
-    ))
-    ->execute();
-
-  // Role of crm admins
-  $role = new stdClass();
-  $role->name = 'crm admin';
-  $role->weight = 4;
-  user_role_save($role);
-
-  // Dummy role, for compatibility reasons only
-  // it skips rid=5
-  $role = new stdClass();
-  $role->name = 'dummy user';
-  $role->weight = 9;
-  user_role_save($role);
-  user_role_delete('dummy user');
-
-  // Role of super users
-  $role = new stdClass();
-  $role->name = 'super user';
-  $role->weight = 3;
-  user_role_save($role);
-
-  // Role of crm coordinators
-  $role = new stdClass();
-  $role->name = 'crm coord';
-  $role->weight = 6;
-  user_role_save($role);
-
-  // Role of crm communicators
-  $role = new stdClass();
-  $role->name = 'crm comm';
-  $role->weight = 7;
-  user_role_save($role);
-
-  // Role of crm analysts
-  $role = new stdClass();
-  $role->name = 'crm analyst';
-  $role->weight = 8;
-  user_role_save($role);
-
-  // Role of crm users
-  $role = new stdClass();
-  $role->name = 'crm user';
-  $role->weight = 2;
-  user_role_save($role);
-
   // roles (rids) required to have TFA
   variable_set('tfa_basic_roles_require',
     array(
+      '1' => '0',
       '2' => '0',
       '3' => '0',
       '4' => '4',
