@@ -181,6 +181,10 @@ function _drush_civicrmprofile_crmuser_permissions($role_name = 'crm user') {
         'access CiviCRM',
         'access Contact Dashboard',
         'add contact notes',
+        'access CiviMail',
+        'edit inbound email basic information',
+        'access my cases and activities',
+        'access CiviReport',        
       )
     )
   );
@@ -201,16 +205,16 @@ function _drush_civicrmprofile_superuser_permissions() {
         'delete contacts',
         'access deleted contacts',
         'import contacts',
-        'edit groups',
         'profile listings and forms',
         'profile edit',
         'access all custom data',
+        'view all notes',
         'view all activities',
         'delete activities',
+        'edit groups',
         'manage tags',
         'administer Tagsets',
-        'view all notes',
-        'edit inbound email basic information',
+        'edit user-driven message templates',
       )
     )
   );
@@ -230,8 +234,7 @@ function _drush_civicrmprofile_crmadmin_permissions() {
         'administer CiviCRM',
         'administer reserved tags',
         'administer reserved groups',
-        'edit message templates',
-        'edit user-driven message templates',
+        'edit system workflow message templates',
       )
     )
   );
