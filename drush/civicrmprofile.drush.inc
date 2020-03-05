@@ -254,23 +254,21 @@ function _drush_civicrmprofile_crmadmin_permissions() {
 // set basic CRM permissions to CRM coordinators
 function _drush_civicrmprofile_crmcoordinator_permissions() {
   $role_name='crm coord';
-  _drush_civicrmprofile_revoke_all_permissions($role_name);
+  // revoke all permissions and grant new CRM permissions as CRM user
+  _drush_civicrmprofile_crmuser_permissions($role_name);
+
   drush_invoke('role-add-perm',
     array(
       $role_name,
       array(
         'access CiviEvent',
-        'access CiviMail',
         'edit event participants',
         'view event info',
-        'edit inbound email basic information',
         'interview campaign contacts',
         'manage campaign',
         'register for events',
         'release campaign contacts',
         'reserve campaign contacts',
-        'access CiviMail',
-        'access my cases and activities',
         'access CiviReport',
       )
     )
@@ -280,16 +278,16 @@ function _drush_civicrmprofile_crmcoordinator_permissions() {
 // set basic CRM permissions to CRM communicators
 function _drush_civicrmprofile_crmcommunicator_permissions() {
   $role_name='crm comm';
-  _drush_civicrmprofile_revoke_all_permissions($role_name);
+  // revoke all permissions and grant new CRM permissions as CRM user
+  _drush_civicrmprofile_crmuser_permissions($role_name);
+
   drush_invoke('role-add-perm',
     array(
       $role_name,
       array(
-        'edit message templates',
         'edit user-driven message templates',
+        'edit system workflow message templates',
         'send SMS',
-        'access CiviMail',
-        'access CiviMail subscribe/unsubscribe pages',
         'delete in CiviMail',
       )
     )
@@ -299,12 +297,13 @@ function _drush_civicrmprofile_crmcommunicator_permissions() {
 // set basic CRM permissions to CRM analysts
 function _drush_civicrmprofile_crmanalyst_permissions() {
   $role_name='crm analyst';
-  _drush_civicrmprofile_revoke_all_permissions($role_name);
+  // revoke all permissions and grant new CRM permissions as CRM user
+  _drush_civicrmprofile_crmuser_permissions($role_name);
+
   drush_invoke('role-add-perm',
     array(
       $role_name,
       array(
-        'access CiviReport',
         'access Report Criteria',
         'save Report Criteria',
         'administer Reports',
