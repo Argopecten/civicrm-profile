@@ -107,10 +107,10 @@ function drush_civicrmprofile_post_provision_verify() {
     _drush_civicrmprofile_enable_extensions($extensions);
 
     // grant basic CRM permissions to anonymous user
-    _drush_civicrmprofile_basic_permissions('anonymous user');
+    _drush_civicrmprofile_grant_basic_permissions('anonymous user');
 
     // grant basic CRM permissions to authenticated user
-    _drush_civicrmprofile_basic_permissions('authenticated user');
+    _drush_civicrmprofile_grant_basic_permissions('authenticated user');
     _drush_civicrmprofile_grant_crmuser_permissions('authenticated user');
 
     // set various CRM options: display, name format, ...
