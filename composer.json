@@ -26,6 +26,8 @@
          "agiliway/com.agiliway.civimobileapi": "5.0.1",
          "civicrm/org.civicrm.flexmailer": "1.1.1",
          "veda-consulting/uk.co.vedaconsulting.gdpr": "2.8",
+         "ginkgostreet/org.civicrm.angularprofiles": "v4.7.31-1.1.2",
+         "civicrm/org.civicrm.contactlayout": "1.4.3",
          "drupal/admin_menu": "3.0-rc6",
          "drupal/ctools": "1.15",
          "drupal/entity": "1.9",

@@ -102,6 +102,8 @@ function drush_civicrmprofile_post_provision_verify() {
       'nz.co.fuzion.csvimport',
       'com.agiliway.civimobileapi',
       'org.civicrm.flexmailer',
+      'org.civicrm.angularprofiles',
+      'org.civicrm.contactlayout',
     );
     _drush_civicrmprofile_enable_extensions($extensions);
 
