@@ -19,10 +19,15 @@
          "drush/drush": "^8.0",
          "symfony/filesystem": "~2.7|^3",
          "webflo/drupal-finder": "^1.0.0",
-         "civicrm/civicrm": "5.22.1",
-         "civicrm/civicrm_l10n_core": "5.22.1",
+         "civicrm/civicrm": "5.23.2",
+         "civicrm/civicrm_l10n_core": "5.23.2",
          "civicrm/org.civicrm.shoreditch": "0.1.0-alpha.36@dev",
          "eileenmcnaughton/nz.co.fuzion.csvimport": "1.5",
+         "agiliway/com.agiliway.civimobileapi": "5.0.1",
+         "civicrm/org.civicrm.flexmailer": "1.1.1",
+         "veda-consulting/uk.co.vedaconsulting.gdpr": "2.8",
+         "ginkgostreet/org.civicrm.angularprofiles": "v4.7.31",
+         "civicrm/org.civicrm.contactlayout": "1.4.3",
          "drupal/tfa": "2.0",
          "drupal/tfa_basic": "1.1",
          "drupal/tfa_rules": "1.1",
@@ -36,7 +41,7 @@
          "drupal/webform_civicrm": "5.0",
          "drupal/bootstrap": "3.26",
          "drupal/jquery_update": "2.7",
-         "drupal/views": "3.23"
+         "drupal/views": "3.24"
     },
     "conflict": {
         "drupal/core": "8.*"
