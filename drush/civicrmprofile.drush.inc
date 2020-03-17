@@ -100,7 +100,6 @@ function drush_civicrmprofile_post_provision_verify() {
     $extensions = array(
       'org.civicrm.shoreditch',
       'nz.co.fuzion.csvimport',
-      'com.agiliway.civimobileapi',
       'org.civicrm.flexmailer',
       'org.civicrm.angularprofiles',
       'org.civicrm.contactlayout',
