@@ -103,6 +103,13 @@ function civicrmprofile_block_info() {
     'visibility' => BLOCK_VISIBILITY_LISTED,
     'pages'      => '<front>',
   );
+  $blocks['crm-superuser-menu'] = array (
+    'info'  => t('CRM superuser'),
+    'region'     => 'sidebar_first',
+    'status'     => TRUE,
+    'visibility' => BLOCK_VISIBILITY_LISTED,
+    'pages'      => '<front>',
+  );
   return $blocks;
 }
 
@@ -114,15 +121,21 @@ function civicrmprofile_block_view($delta='') {
   global $user;
   switch ($delta) {
     case 'crm-user-menu':
-      if (in_array('authenticated user', $user->roles)) {
+      if (in_array('crm user', $user->roles)) {
         $block['subject'] = t('CRM menü');
         $block['content'] = _crmusermenu_content();
       }
       break;
     case 'crm-admin-menu':
-      if (in_array('site admin', $user->roles)) {
+      if (in_array('crm admin', $user->roles)) {
         $block['subject'] = t('CRM admin');
-        $block['content'] = _siteadminmenu_content();
+        $block['content'] = _crmadminmenu_content();
+      }
+      break;
+    case 'crm-superuser-menu':
+      if (in_array('super user', $user->roles)) {
+        $block['subject'] = t('CRM superuser');
+        $block['content'] = _superusermenu_content();
       }
       break;
   }
@@ -138,9 +151,6 @@ function _crmusermenu_content() {
   $content = _add_to_blockcontents($content, 'Részletes keresés', '/civicrm/contact/search/advanced?reset=1');
   $content = _add_to_blockcontents($content, 'Új kapcsolat', '/civicrm/contact/add?reset=1&ct=Individual');
   $content = _add_to_blockcontents($content, 'Új aktivitás', '/civicrm/activity?reset=1&action=add&context=standalone');
-  $content = _add_to_blockcontents($content, 'Csoportok', '/civicrm/group');
-  $content = _add_to_blockcontents($content, 'Címkék', '/civicrm/tag');
-  $content = _add_to_blockcontents($content, 'Adatimport', '/civicrm/import/contact');
   $content = _add_to_blockcontents($content, 'Körlevél', '/civicrm/mailing/browse/scheduled');
   $content = _add_to_blockcontents($content, 'Ügyek', '/civicrm/case');
   $content = _add_to_blockcontents($content, 'Riportok', '/civicrm/report/list?compid=4&reset=1');
@@ -150,9 +160,21 @@ function _crmusermenu_content() {
 /**
  * block content for site admin menu block
  */
-function _siteadminmenu_content() {
+function _crmadminmenu_content() {
   $content = array();
   $content = _add_to_blockcontents($content, 'CRM admin', '/civicrm/admin');
+  $content = _add_to_blockcontents($content, 'Felhasználók', '/admin/people');
+  return $content;
+}
+
+/**
+ * block content for superuser menu block
+ */
+function _superusermenu_content() {
+  $content = array();
+  $content = _add_to_blockcontents($content, 'Csoportok', '/civicrm/group');
+  $content = _add_to_blockcontents($content, 'Címkék', '/civicrm/tag');
+  $content = _add_to_blockcontents($content, 'Kapcsolat import', '/civicrm/import/contact');
   $content = _add_to_blockcontents($content, 'Felhasználók', '/admin/people');
   return $content;
 }
