@@ -115,6 +115,13 @@ function civicrmprofile_block_info() {
     'visibility' => BLOCK_VISIBILITY_LISTED,
     'pages'      => '<front>',
   );
+  $blocks['crm-campaign-menu'] = array (
+    'info'  => t('Campaign tools'),
+    'region'     => 'sidebar_first',
+    'status'     => TRUE,
+    'visibility' => BLOCK_VISIBILITY_LISTED,
+    'pages'      => '<front>',
+  );
   return $blocks;
 }
 
@@ -141,6 +148,12 @@ function civicrmprofile_block_view($delta='') {
       if (in_array('super user', $user->roles)) {
         $block['subject'] = t('CRM superuser');
         $block['content'] = _superusermenu_content();
+      }
+      break;
+    case 'crm-campaign-menu':
+      if (in_array('crm coord', $user->roles)) {
+        $block['subject'] = t('Campaign tools');
+        $block['content'] = _campaignmenu_content();
       }
       break;
   }
@@ -181,6 +194,16 @@ function _superusermenu_content() {
   $content = _add_to_blockcontents($content, 'Címkék', '/civicrm/tag');
   $content = _add_to_blockcontents($content, 'Kapcsolat import', '/civicrm/import/contact');
   $content = _add_to_blockcontents($content, 'Felhasználók', '/admin/people');
+  return $content;
+}
+
+/**
+ * block content for campaign menu blocks
+ */
+function _campaignmenu_content() {
+  $content = array();
+  $content = _add_to_blockcontents($content, 'Események', '/civicrm/event');
+  $content = _add_to_blockcontents($content, 'Kampányok', '/civicrm/campaign?reset=1');
   return $content;
 }
 
