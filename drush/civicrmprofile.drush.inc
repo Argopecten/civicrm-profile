@@ -102,17 +102,20 @@ function drush_civicrmprofile_post_provision_verify() {
       'org.civicrm.shoreditch',
       'nz.co.fuzion.csvimport',
       'org.civicrm.sms.clickatell',
+      'org.civicrm.flexmailer',
+      'org.civicrm.angularprofiles',
+      'org.civicrm.contactlayout',
     );
     _drush_civicrmprofile_enable_extensions($extensions);
 
     // grant basic CRM permissions to anonymous user
-    _drush_civicrmprofile_basic_permissions('anonymous user');
+    _drush_civicrmprofile_grant_basic_permissions('anonymous user');
 
     // grant basic CRM permissions to authenticated user
-    _drush_civicrmprofile_basic_permissions('authenticated user');
+    _drush_civicrmprofile_grant_basic_permissions('authenticated user');
 
     // set basic CRM permissions to CRM user
-    _drush_civicrmprofile_crmuser_permissions();
+    _drush_civicrmprofile_grant_crmuser_permissions('crm user');
 
     // set basic CRM permissions to CRM coordinators
     _drush_civicrmprofile_crmcoordinator_permissions();
@@ -164,7 +167,7 @@ function _drush_civicrmprofile_enable_extensions($extensions) {
 }
 
 // grant basic CRM permissions
-function _drush_civicrmprofile_basic_permissions($role_name) {
+function _drush_civicrmprofile_grant_basic_permissions($role_name) {
   _drush_civicrmprofile_revoke_all_permissions($role_name);
   drush_invoke('role-add-perm',
     array(
@@ -179,8 +182,8 @@ function _drush_civicrmprofile_basic_permissions($role_name) {
   );
 }
 
-// grant CRM user permissions
-function _drush_civicrmprofile_crmuser_permissions($role_name = 'crm user') {
+// grant full CRM user permissions
+function _drush_civicrmprofile_grant_crmuser_permissions($role_name) {
   _drush_civicrmprofile_revoke_all_permissions($role_name);
   drush_invoke('role-add-perm',
     array(
@@ -205,7 +208,7 @@ function _drush_civicrmprofile_crmuser_permissions($role_name = 'crm user') {
 function _drush_civicrmprofile_superuser_permissions() {
   $role_name='super user';
   // revoke all permissions and grant new CRM permissions as CRM user
-  _drush_civicrmprofile_crmuser_permissions($role_name);
+  _drush_civicrmprofile_grant_crmuser_permissions($role_name);
 
   // grant extra permissions for 'super user'
   drush_invoke('role-add-perm',
@@ -235,7 +238,7 @@ function _drush_civicrmprofile_superuser_permissions() {
 function _drush_civicrmprofile_crmadmin_permissions() {
   $role_name='crm admin';
   // revoke all permissions and grant new CRM permissions as CRM user
-  _drush_civicrmprofile_crmuser_permissions($role_name);
+  _drush_civicrmprofile_grant_crmuser_permissions($role_name);
 
   // grant extra permissions for 'crm admin'
   drush_invoke('role-add-perm',
@@ -255,7 +258,7 @@ function _drush_civicrmprofile_crmadmin_permissions() {
 function _drush_civicrmprofile_crmcoordinator_permissions() {
   $role_name='crm coord';
   // revoke all permissions and grant new CRM permissions as CRM user
-  _drush_civicrmprofile_crmuser_permissions($role_name);
+  _drush_civicrmprofile_grant_crmuser_permissions($role_name);
 
   drush_invoke('role-add-perm',
     array(
@@ -279,7 +282,7 @@ function _drush_civicrmprofile_crmcoordinator_permissions() {
 function _drush_civicrmprofile_crmcommunicator_permissions() {
   $role_name='crm comm';
   // revoke all permissions and grant new CRM permissions as CRM user
-  _drush_civicrmprofile_crmuser_permissions($role_name);
+  _drush_civicrmprofile_grant_crmuser_permissions($role_name);
 
   drush_invoke('role-add-perm',
     array(
@@ -298,7 +301,7 @@ function _drush_civicrmprofile_crmcommunicator_permissions() {
 function _drush_civicrmprofile_crmanalyst_permissions() {
   $role_name='crm analyst';
   // revoke all permissions and grant new CRM permissions as CRM user
-  _drush_civicrmprofile_crmuser_permissions($role_name);
+  _drush_civicrmprofile_grant_crmuser_permissions($role_name);
 
   drush_invoke('role-add-perm',
     array(
