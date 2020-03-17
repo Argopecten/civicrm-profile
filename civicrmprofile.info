@@ -29,6 +29,6 @@ dependencies[] = user
 
 ; drupal contrib modules
 dependencies[] = ctools
-dependencies[] = views
+dependencies[] = views_ui
 dependencies[] = admin_menu
 dependencies[] = jquery_update
