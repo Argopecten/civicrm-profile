@@ -31,7 +31,7 @@
          "civicrm/org.civicrm.volunteer": "v4.7.31",
          "bjendres/de.systopia.osm": "1.2.1",
          "systopia/de.systopia.xcm": "1.7-beta3@dev",
-         "argopecten/de.systopia.mutualaid": "1.1-alpha2@dev",
+         "argopecten/de.systopia.mutualaid": "1.1-alpha4@dev",
          "drupal/tfa": "2.0",
          "drupal/tfa_basic": "1.1",
          "drupal/tfa_rules": "1.1",
