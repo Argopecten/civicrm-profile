@@ -104,6 +104,9 @@ function drush_civicrmprofile_post_provision_verify() {
       'org.civicrm.angularprofiles',
       'org.civicrm.contactlayout',
       'org.civicrm.volunteer',
+      'de.systopia.osm',
+      'de.systopia.xcm',
+      'de.systopia.mutualaid',
     );
     _drush_civicrmprofile_enable_extensions($extensions);
 
@@ -171,6 +174,7 @@ function _drush_civicrmprofile_grant_basic_permissions($role_name) {
         'profile create',
         'profile view',
         'access AJAX API',
+        'request help',
       )
     )
   );
@@ -228,6 +232,7 @@ function _drush_civicrmprofile_superuser_permissions() {
         'create volunteer projects',
         'edit all volunteer projects',
         'delete all volunteer projects ',
+        'administer MutualAid',
       )
     )
   );
@@ -269,6 +274,7 @@ function _drush_civicrmprofile_activist_permissions() {
         'create volunteer projects',
         'edit own volunteer projects',
         'delete own volunteer projects',
+        'administer MutualAid',
       )
     )
   );
