@@ -78,6 +78,12 @@ function civicrmprofile_permissions() {
       'access toolbar',
     ));
 
+    // 7) Permissions for CRM activists
+    $role = user_role_load_by_name('activist');
+    user_role_grant_permissions($role->rid, array(
+      'access content',
+    ));
+
   } else {
      // something is wrong...
      drush_log('wrong context in civicrmprofile_permissions(): ' . $context, 'warning');

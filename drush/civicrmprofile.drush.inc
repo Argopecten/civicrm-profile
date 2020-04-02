@@ -103,6 +103,7 @@ function drush_civicrmprofile_post_provision_verify() {
       'org.civicrm.flexmailer',
       'org.civicrm.angularprofiles',
       'org.civicrm.contactlayout',
+      'org.civicrm.volunteer',
     );
     _drush_civicrmprofile_enable_extensions($extensions);
 
@@ -120,6 +121,9 @@ function drush_civicrmprofile_post_provision_verify() {
 
     // grant CRM admin permissions
     _drush_civicrmprofile_crmadmin_permissions();
+
+    // grant CRM activist permissions
+    _drush_civicrmprofile_activist_permissions();
 
     // revoke all CRM permissions from site admin
     _drush_civicrmprofile_revoke_all_permissions('site admin');
@@ -166,6 +170,7 @@ function _drush_civicrmprofile_grant_basic_permissions($role_name) {
         'access uploaded files',
         'profile create',
         'profile view',
+        'access AJAX API',
       )
     )
   );
@@ -188,6 +193,8 @@ function _drush_civicrmprofile_grant_crmuser_permissions($role_name) {
         'edit inbound email basic information',
         'access my cases and activities',
         'access CiviReport',
+        'register to volunteer',
+        'log own hours',
       )
     )
   );
@@ -218,6 +225,9 @@ function _drush_civicrmprofile_superuser_permissions() {
         'manage tags',
         'administer Tagsets',
         'edit user-driven message templates',
+        'create volunteer projects',
+        'edit all volunteer projects',
+        'delete all volunteer projects ',
       )
     )
   );
@@ -238,6 +248,27 @@ function _drush_civicrmprofile_crmadmin_permissions() {
         'administer reserved tags',
         'administer reserved groups',
         'edit system workflow message templates',
+        'edit volunteer project relationships ',
+        'edit volunteer registration profiles ',
+      )
+    )
+  );
+}
+
+// grant CRM activist permissions
+function _drush_civicrmprofile_activist_permissions() {
+  $role_name='activist';
+  // revoke all permissions and grant new CRM permissions as CRM user
+  _drush_civicrmprofile_grant_crmuser_permissions($role_name);
+
+  // grant extra permissions for 'activist'
+  drush_invoke('role-add-perm',
+    array(
+      $role_name,
+      array(
+        'create volunteer projects',
+        'edit own volunteer projects',
+        'delete own volunteer projects',
       )
     )
   );
