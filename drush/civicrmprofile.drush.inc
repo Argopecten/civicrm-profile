@@ -175,6 +175,7 @@ function _drush_civicrmprofile_grant_basic_permissions($role_name) {
         'profile view',
         'access AJAX API',
         'request help',
+        'register to volunteer',
       )
     )
   );
@@ -197,7 +198,6 @@ function _drush_civicrmprofile_grant_crmuser_permissions($role_name) {
         'edit inbound email basic information',
         'access my cases and activities',
         'access CiviReport',
-        'register to volunteer',
         'log own hours',
       )
     )
