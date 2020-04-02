@@ -139,9 +139,9 @@ function civicrmprofile_modules_installed($modules) {
   // drush_log('It"s the civicrmprofile_modules_installed hook', 'debug');
 
   if (in_array('civicrm', $modules)) {
-  // CiviCRM module is installed
-  // drush_log('civicrmprofile_modules_installed: CiviCRM module installed', 'debug');
+    // CiviCRM module is installed
+    // drush_log('civicrmprofile_modules_installed: CiviCRM module installed', 'debug');
 
-  // this flavor is using hoseholds
-
+    // this flavor is using hoseholds
+  }
 }
