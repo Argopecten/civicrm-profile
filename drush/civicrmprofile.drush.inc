@@ -103,6 +103,7 @@ function drush_civicrmprofile_post_provision_verify() {
       'org.civicrm.flexmailer',
       'org.civicrm.angularprofiles',
       'org.civicrm.contactlayout',
+      'org.civicrm.volunteer',
     );
     _drush_civicrmprofile_enable_extensions($extensions);
 
