@@ -153,7 +153,6 @@ function civicrmprofile_modules_installed($modules) {
     // enable CiviCRM modules: CiviCRM Theme and Webform CiviCRM Integration
     module_enable(
       array(
-        'webform_civicrm',
         'civicrmtheme',
       ),
       TRUE
