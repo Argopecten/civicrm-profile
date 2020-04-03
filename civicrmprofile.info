@@ -32,6 +32,10 @@ dependencies[] = ctools
 dependencies[] = views_ui
 dependencies[] = admin_menu
 dependencies[] = jquery_update
+dependencies[] = panels
+dependencies[] = views_content
+dependencies[] = page_manager
+dependencies[] = webform
 
 ; modules to be enabled for 2FA
 dependencies[] = tfa_basic
