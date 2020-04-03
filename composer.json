@@ -46,7 +46,8 @@
          "drupal/webform_civicrm": "5.0",
          "drupal/bootstrap": "3.26",
          "drupal/jquery_update": "2.7",
-         "drupal/views": "3.24"
+         "drupal/views": "3.24",
+         "drupal/panels": "3.9"         
     },
     "conflict": {
         "drupal/core": "8.*"

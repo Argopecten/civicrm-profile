@@ -129,7 +129,7 @@
       '4' => '0',
       '5' => '0',
       '6' => '0',
-      '7' => '0',      
+      '7' => '0',
     )
   );
 }
@@ -148,6 +148,15 @@ function civicrmprofile_modules_installed($modules) {
     // CiviCRM module is installed
     // drush_log('civicrmprofile_modules_installed: CiviCRM module installed', 'debug');
 
-    // this flavor is using hoseholds
+    // this flavor is using households
+
+    // enable CiviCRM modules: CiviCRM Theme and Webform CiviCRM Integration
+    module_enable(
+      array(
+        'webform_civicrm',
+        'civicrmtheme',
+      ),
+      TRUE
+    );
   }
 }
