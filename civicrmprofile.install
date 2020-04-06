@@ -31,7 +31,7 @@
    theme_disable(array('bartik'));
 
    // Enable standard content block only.
-   $default_theme = variable_get('theme_default', 'bootstrap');
+   $default_theme = variable_get('theme_default', 'civihelp');
    $values = array(
      array(
        'module' => 'system',
