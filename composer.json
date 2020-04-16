@@ -35,7 +35,7 @@
          "drupal/webform": "4.22",
          "drupal/options_element": "1.12",
          "drupal/webform_civicrm": "5.0",
-         "drupal/bootstrap": "3.26",
+         "argopecten/civiboot": "dev-superhero@dev",
          "drupal/jquery_update": "2.7",
          "drupal/views": "3.24",
          "drupal/panels": "3.9"
