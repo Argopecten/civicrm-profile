@@ -15,6 +15,11 @@ function civicrmprofile_install_tasks($install_state){
       'display' => FALSE,
       'type' => 'normal'
     ),
+    'civicrmprofile_sitesettings' => array(
+      'display_name' => st('Site settings'),
+      'display' => FALSE,
+      'type' => 'normal'
+    ),
   );
   return $tasks;
 }
@@ -88,6 +93,29 @@ function civicrmprofile_permissions() {
      // something is wrong...
      drush_log('wrong context in civicrmprofile_permissions(): ' . $context, 'warning');
   }
+}
+
+/**
+ * Install task to configure site settings.
+ * - site_name
+ * - site_slogan
+ * - site_mail
+ * - site_frontpage
+ * - site_403
+ * - site_404
+ */
+function civicrmprofile_sitesettings() {
+  variable_set('site_name',   'CiviHelp');
+  variable_set('site_slogan', 'A segítségnyújtás eszköze');
+
+  global $base_url;
+  $base_url_parts = parse_url($base_url);
+  $adminMail = 'admin@'.$base_url_parts['host'];
+  variable_set('site_mail', $adminMail);
+
+  // variable_set('site_frontpage', '');
+  // variable_set('site_403', '');
+  // variable_set('site_404', '');
 }
 
 /**
