@@ -16,7 +16,7 @@
  function civicrmprofile_install() {
    // set default theme other then bartik
    $enable = array(
-     'theme_default' => 'bootstrap',
+     'theme_default' => 'civiboot',
      'admin_theme' => 'seven',
    );
    theme_enable($enable);
@@ -31,7 +31,7 @@
    theme_disable(array('bartik'));
 
    // Enable standard content block only.
-   $default_theme = variable_get('theme_default', 'bootstrap');
+   $default_theme = variable_get('theme_default', 'civiboot');
    $values = array(
      array(
        'module' => 'system',
@@ -121,9 +121,9 @@
       '1' => '0',
       '2' => '0',
       '3' => '0',
-      '4' => '4',
-      '5' => '5',
-      '6' => '6',
+      '4' => '0',
+      '5' => '0',
+      '6' => '0',
     )
   );
 }
@@ -174,5 +174,13 @@ function civicrmprofile_modules_installed($modules) {
     ->fields(array('is_active' => 0,))
     ->condition('name', 'New Household')
     ->execute();
+
+  // enable CiviCRM modules: CiviCRM Theme and Webform CiviCRM Integration
+  module_enable(
+    array(
+      'civicrmtheme',
+    ),
+    TRUE
+  );
   }
 }
