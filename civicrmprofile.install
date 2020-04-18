@@ -16,7 +16,7 @@
  function civicrmprofile_install() {
    // set default theme other then bartik
    $enable = array(
-     'theme_default' => 'civihelp',
+     'theme_default' => 'civiboot',
      'admin_theme' => 'seven',
    );
    theme_enable($enable);
@@ -31,7 +31,7 @@
    theme_disable(array('bartik'));
 
    // Enable standard content block only.
-   $default_theme = variable_get('theme_default', 'civihelp');
+   $default_theme = variable_get('theme_default', 'civiboot');
    $values = array(
      array(
        'module' => 'system',

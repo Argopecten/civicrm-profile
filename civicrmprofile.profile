@@ -105,8 +105,8 @@ function civicrmprofile_permissions() {
  * - site_404
  */
 function civicrmprofile_sitesettings() {
-  variable_set('site_name',   'CiviHelp');
-  variable_set('site_slogan', 'A segítségnyújtás eszköze');
+  variable_set('site_name',   t('CiviBase'));
+  variable_set('site_slogan', t('Placeholder for site slogen'));
 
   global $base_url;
   $base_url_parts = parse_url($base_url);
