@@ -296,4 +296,21 @@ function _drush_civicrmprofile_set_crm_options() {
     ->setCheckPermissions(FALSE)
     ->execute();
 }
+
+/**
+ * hosting_civicrm hook to modify the civicrm.settings.php file template.
+ *   1) add new setting which allows a custom resource directory for translation files
+ */
+function civicrmprofile_civicrm_settings_template_alter(&$template) {
+  // drush_log('It"s the civicrmprofile_civicrm_settings_template_alter hook.' . $template, 'debug');
+
+  $l10n_dir = "
+// New setting which allows a custom resource directory for translation files
+// (and allows the directory to be outside of the main code base,
+//  which helps for Drupal8 and those using composer to manage their CiviCRM builds).
+define('CIVICRM_L10N_BASEDIR', 'profiles/civicrmprofile/translations');";
+
+  $template = $template . $$l10n_dir;
+}
+
 ?>
