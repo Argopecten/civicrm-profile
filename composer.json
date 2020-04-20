@@ -20,6 +20,7 @@
          "symfony/filesystem": "~2.7|^3",
          "webflo/drupal-finder": "^1.0.0",
          "civicrm/civicrm": "5.24.3",
+         "drupal-composer/drupal-l10n": "1.0.1",
          "civicrm/org.civicrm.shoreditch": "0.1.0+0e181e3",
          "eileenmcnaughton/nz.co.fuzion.csvimport": "1.5",
          "agiliway/com.agiliway.civimobileapi": "5.0.1",
