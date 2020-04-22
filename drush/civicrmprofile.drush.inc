@@ -308,9 +308,10 @@ function civicrmprofile_civicrm_settings_template_alter(&$template) {
 // New setting which allows a custom resource directory for translation files
 // (and allows the directory to be outside of the main code base,
 //  which helps for Drupal8 and those using composer to manage their CiviCRM builds).
-define('CIVICRM_L10N_BASEDIR', 'profiles/civicrmprofile/translations/contrib/civicrm/l10n');";
+define('CIVICRM_L10N_BASEDIR', 'profiles/civicrmprofile/translations/contrib/civicrm/l10n');
+";
 
-  $template = $template . $$l10n_dir;
+  $template = $template . $l10n_dir;
 }
 
 ?>
