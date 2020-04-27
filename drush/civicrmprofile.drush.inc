@@ -195,7 +195,7 @@ function _drush_civicrmprofile_grant_crmuser_permissions($role_name) {
 
 // grant superuser permissions
 function _drush_civicrmprofile_superuser_permissions() {
-  $role_name='super user';
+  $role_name=t('super user');
   // revoke all permissions and grant new CRM permissions as CRM user
   _drush_civicrmprofile_grant_crmuser_permissions($role_name);
 
@@ -225,7 +225,7 @@ function _drush_civicrmprofile_superuser_permissions() {
 
 // grant CRM admin permissions
 function _drush_civicrmprofile_crmadmin_permissions() {
-  $role_name='crm admin';
+  $role_name=t('crm admin');
   // revoke all permissions and grant new CRM permissions as CRM user
   _drush_civicrmprofile_grant_crmuser_permissions($role_name);
 
