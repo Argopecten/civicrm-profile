@@ -55,7 +55,7 @@ function civicrmprofile_install() {
 
   // 3. site administrator
   $siteadmin_role = new stdClass();
-  $siteadmin_role->name = 'site admin';
+  $siteadmin_role->name = t('site admin');
   $siteadmin_role->weight = 5;
   user_role_save($siteadmin_role);
   // Set this as the administrator role.
@@ -73,45 +73,45 @@ function civicrmprofile_install() {
 
   // 4. CRM admins
   $crmadmin_role = new stdClass();
-  $crmadmin_role->name = 'crm admin';
+  $crmadmin_role->name = t('crm admin');
   $crmadmin_role->weight = 4;
   user_role_save($crmadmin_role);
 
   // Dummy role, for compatibility reasons only
   // it skips rid=5
   $role = new stdClass();
-  $role->name = 'dummy user';
+  $role->name = t('dummy user');
   $role->weight = 9;
   user_role_save($role);
-  user_role_delete('dummy user');
+  user_role_delete(t('dummy user'));
 
   // 6. super users
   $role = new stdClass();
-  $role->name = 'super user';
+  $role->name = t('super user');
   $role->weight = 3;
   user_role_save($role);
 
   // 7. crm coordinators
   $role = new stdClass();
-  $role->name = 'crm coord';
+  $role->name = t('crm coord');
   $role->weight = 6;
   user_role_save($role);
 
   // 8. crm communicators
   $role = new stdClass();
-  $role->name = 'crm comm';
+  $role->name = t('crm comm');
   $role->weight = 7;
   user_role_save($role);
 
   // 9. crm analysts
   $role = new stdClass();
-  $role->name = 'crm analyst';
+  $role->name = t('crm analyst');
   $role->weight = 8;
   user_role_save($role);
 
   // 10. crm users
   $role = new stdClass();
-  $role->name = 'crm user';
+  $role->name = t('crm user');
   $role->weight = 2;
   user_role_save($role);
 
