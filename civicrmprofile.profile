@@ -60,13 +60,13 @@ function civicrmprofile_permissions() {
     user_role_grant_permissions(variable_get('user_admin_role'), array_keys(module_invoke_all('permission')));
 
     // 4) Permissions for CRM users
-    $role = user_role_load_by_name('crm user');
+    $role = user_role_load_by_name(t('crm user'));
     user_role_grant_permissions($role->rid, array(
       'access content',
     ));
 
     // 5) Permissions for super users
-    $role = user_role_load_by_name('super user');
+    $role = user_role_load_by_name(t('super user'));
     user_role_grant_permissions($role->rid, array(
       'administer users',
       'assign crm user role',
@@ -74,7 +74,7 @@ function civicrmprofile_permissions() {
     ));
 
     // 6) Permissions for CRM admins
-    $role = user_role_load_by_name('crm admin');
+    $role = user_role_load_by_name(t('crm admin'));
     user_role_grant_permissions($role->rid, array(
       'administer users',
       'assign crm user role',
@@ -84,7 +84,7 @@ function civicrmprofile_permissions() {
     ));
 
     // 7) Permissions for CRM activists
-    $role = user_role_load_by_name('activist');
+    $role = user_role_load_by_name(t('activist'));
     user_role_grant_permissions($role->rid, array(
       'access content',
     ));
