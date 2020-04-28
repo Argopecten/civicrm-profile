@@ -55,7 +55,7 @@
 
   // 3. site administrator
   $siteadmin_role = new stdClass();
-  $siteadmin_role->name = 'site admin';
+  $siteadmin_role->name = t('site admin');
   $siteadmin_role->weight = 5;
   user_role_save($siteadmin_role);
   // Set this as the administrator role.
@@ -73,25 +73,25 @@
 
   // 4. CRM users
   $crmuser_role = new stdClass();
-  $crmuser_role->name = 'crm user';
+  $crmuser_role->name = t('crm user');
   $crmuser_role->weight = 2;
   user_role_save($crmuser_role);
 
   //5. super users
   $superuser_role = new stdClass();
-  $superuser_role->name = 'super user';
+  $superuser_role->name = t('super user');
   $superuser_role->weight = 3;
   user_role_save($superuser_role);
 
   // 6. CRM admins
   $crmadmin_role = new stdClass();
-  $crmadmin_role->name = 'crm admin';
+  $crmadmin_role->name = t('crm admin');
   $crmadmin_role->weight = 4;
   user_role_save($crmadmin_role);
 
   // 7. CRM activist
   $activist_role = new stdClass();
-  $activist_role->name = 'activist';
+  $activist_role->name = t('activist');
   $activist_role->weight = 4;
   user_role_save($activist_role);
 
