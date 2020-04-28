@@ -109,13 +109,13 @@ function drush_civicrmprofile_post_provision_verify() {
     _drush_civicrmprofile_enable_extensions($extensions);
 
     // grant basic CRM permissions to anonymous user
-    _drush_civicrmprofile_grant_basic_permissions('anonymous user');
+    _drush_civicrmprofile_grant_basic_permissions(t('anonymous user'));
 
     // grant basic CRM permissions to authenticated user
-    _drush_civicrmprofile_grant_basic_permissions('authenticated user');
+    _drush_civicrmprofile_grant_basic_permissions(t('authenticated user'));
 
     // set basic CRM permissions to CRM user
-    _drush_civicrmprofile_grant_crmuser_permissions('crm user');
+    _drush_civicrmprofile_grant_crmuser_permissions(t('crm user'));
 
     // set basic CRM permissions to CRM coordinators
     _drush_civicrmprofile_crmcoordinator_permissions();
@@ -133,7 +133,7 @@ function drush_civicrmprofile_post_provision_verify() {
     _drush_civicrmprofile_crmadmin_permissions();
 
     // revoke all CRM permissions from site admin
-    _drush_civicrmprofile_revoke_all_permissions('site admin');
+    _drush_civicrmprofile_revoke_all_permissions(t('site admin'));
 
     // set various CRM options: display, name format, ...
     _drush_civicrmprofile_set_crm_options();
@@ -206,7 +206,7 @@ function _drush_civicrmprofile_grant_crmuser_permissions($role_name) {
 
 // grant superuser permissions
 function _drush_civicrmprofile_superuser_permissions() {
-  $role_name='super user';
+  $role_name=t('super user');
   // revoke all permissions and grant new CRM permissions as CRM user
   _drush_civicrmprofile_grant_crmuser_permissions($role_name);
 
@@ -236,7 +236,7 @@ function _drush_civicrmprofile_superuser_permissions() {
 
 // grant CRM admin permissions
 function _drush_civicrmprofile_crmadmin_permissions() {
-  $role_name='crm admin';
+  $role_name=t('crm admin');
   // revoke all permissions and grant new CRM permissions as CRM user
   _drush_civicrmprofile_grant_crmuser_permissions($role_name);
 
@@ -256,7 +256,7 @@ function _drush_civicrmprofile_crmadmin_permissions() {
 
 // set basic CRM permissions to CRM coordinators
 function _drush_civicrmprofile_crmcoordinator_permissions() {
-  $role_name='crm coord';
+  $role_name=t('crm coord');
   // revoke all permissions and grant new CRM permissions as CRM user
   _drush_civicrmprofile_grant_crmuser_permissions($role_name);
 
@@ -280,7 +280,7 @@ function _drush_civicrmprofile_crmcoordinator_permissions() {
 
 // set basic CRM permissions to CRM communicators
 function _drush_civicrmprofile_crmcommunicator_permissions() {
-  $role_name='crm comm';
+  $role_name=t('crm comm');
   // revoke all permissions and grant new CRM permissions as CRM user
   _drush_civicrmprofile_grant_crmuser_permissions($role_name);
 
@@ -299,7 +299,7 @@ function _drush_civicrmprofile_crmcommunicator_permissions() {
 
 // set basic CRM permissions to CRM analysts
 function _drush_civicrmprofile_crmanalyst_permissions() {
-  $role_name='crm analyst';
+  $role_name=t('crm analyst');
   // revoke all permissions and grant new CRM permissions as CRM user
   _drush_civicrmprofile_grant_crmuser_permissions($role_name);
 
@@ -431,4 +431,21 @@ function _drush_civicrmprofile_set_crm_options() {
     ->setCheckPermissions(FALSE)
     ->execute();
 }
+
+/**
+ * hosting_civicrm hook to modify the civicrm.settings.php file template.
+ *   1) add new setting which allows a custom resource directory for translation files
+ */
+function civicrmprofile_civicrm_settings_template_alter(&$template) {
+  // drush_log('It"s the civicrmprofile_civicrm_settings_template_alter hook.' . $template, 'debug');
+
+  // moved into platform.setting.php of Aegir
+  /*
+  $l10n_dir = "
+  define('CIVICRM_L10N_BASEDIR', '/var/aegir/platforms/l10n/web/profiles/civicrmprofile/translations/contrib/civicrm/l10n');
+  ";
+  $template = $template . $l10n_dir;
+  */
+}
+
 ?>
