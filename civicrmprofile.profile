@@ -113,7 +113,7 @@ function civicrmprofile_sitesettings() {
   $adminMail = 'admin@'.$base_url_parts['host'];
   variable_set('site_mail', $adminMail);
 
-  // variable_set('site_frontpage', '');
+  variable_set('site_frontpage', 'civicrm');
   // variable_set('site_403', '');
   // variable_set('site_404', '');
 }
