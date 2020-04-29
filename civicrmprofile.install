@@ -157,8 +157,6 @@ function civicrmprofile_modules_installed($modules) {
     \Civi\Api4\Setting::set()
       ->addValue('enable_components', [
         'CiviMail',
-        'CiviCase',
-        'CiviReport',
       ])
       ->setCheckPermissions(FALSE)
       ->execute();
