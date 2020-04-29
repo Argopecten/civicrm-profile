@@ -145,6 +145,7 @@
  *  3) enable CiviCRM modules
  *  4) this flavor is using households, do not remove it!
  *  5) set various CRM options: display, name format, ...
+ *  6) set more contact sub-types
  */
 function civicrmprofile_modules_installed($modules) {
   // drush_log('It"s the civicrmprofile_modules_installed hook', 'debug');
@@ -186,6 +187,8 @@ function civicrmprofile_modules_installed($modules) {
     // 5) set various CRM options: display, name format, ...
     _civicrmprofile_set_crm_options();
 
+    // 6) set more contact sub-types
+    _civicrmprofile_set_contact_types();
   }
 }
 
@@ -304,6 +307,27 @@ function _civicrmprofile_set_crm_options() {
   // 5) advanced search options: with relationships (4)
   \Civi\Api4\Setting::set()
     ->addValue('advanced_search_options', [ 1, 2, 3, 4, 5, 6, 10, 13, 16, 17, 18, 19, ])
+    ->setCheckPermissions(FALSE)
+    ->execute();
+}
+
+function _civicrmprofile_set_contact_types() {
+  \Civi\Api4\ContactType::create()
+    ->addValue('name', 'coordinator')
+    ->addValue('label', 'Koordinátor')
+    ->addValue('parent_id', 1)
+    ->setCheckPermissions(FALSE)
+    ->execute();
+  \Civi\Api4\ContactType::create()
+    ->addValue('name', 'activist')
+    ->addValue('label', 'Aktivista')
+    ->addValue('parent_id', 1)
+    ->setCheckPermissions(FALSE)
+    ->execute();
+  \Civi\Api4\ContactType::create()
+    ->addValue('name', 'helpee')
+    ->addValue('label', 'Támogatott')
+    ->addValue('parent_id', 1)
     ->setCheckPermissions(FALSE)
     ->execute();
 }
