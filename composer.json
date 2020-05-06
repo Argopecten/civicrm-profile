@@ -29,6 +29,7 @@
          "ginkgostreet/org.civicrm.angularprofiles": "4.7.31+288432a",
          "civicrm/org.civicrm.contactlayout": "1.4.3+fabf4c6",
          "bjendres/de.systopia.osm": "1.2.1",
+         "veda-consulting/uk.co.vedaconsulting.mailchimp": "2.0.1+124083b",
          "drupal/tfa": "2.0",
          "drupal/tfa_basic": "1.1",
          "drupal/tfa_rules": "1.1",

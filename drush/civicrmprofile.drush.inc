@@ -119,6 +119,7 @@ function _drush_civicrmprofile_grant_basic_permissions($role_name) {
         'access uploaded files',
         'profile create',
         'profile view',
+        'allow webhook posts',
       )
     )
   );
@@ -139,6 +140,7 @@ function _drush_civicrmprofile_grant_crmuser_permissions($role_name) {
         'add contact notes',
         'access CiviMail',
         'edit inbound email basic information',
+        'allow Mailchimp sync',
       )
     )
   );
