@@ -37,7 +37,6 @@
          "drupal/entity": "1.9",
          "drupal/admin_menu": "3.0-rc6",
          "drupal/ctools": "1.15",
-         "drupal/entity": "1.9",
          "drupal/webform": "4.22",
          "drupal/options_element": "1.12",
          "drupal/webform_civicrm": "5.0",
