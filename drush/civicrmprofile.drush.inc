@@ -139,8 +139,6 @@ function _drush_civicrmprofile_grant_crmuser_permissions($role_name) {
         'add contact notes',
         'access CiviMail',
         'edit inbound email basic information',
-        'access my cases and activities',
-        'access CiviReport',
       )
     )
   );
