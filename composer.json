@@ -40,7 +40,7 @@
          "drupal/webform": "4.22",
          "drupal/options_element": "1.12",
          "drupal/webform_civicrm": "5.0",
-         "drupal/civicrm_views_dashlets": "dev-master#c15e3394",
+         "drupal/civicrm_views_dashlets": "dev-master#c15e3394@dev",
          "argopecten/civiboot": "1.0.0",
          "drupal/jquery_update": "2.7",
          "drupal/views": "3.24",
