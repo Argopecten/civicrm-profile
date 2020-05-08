@@ -181,6 +181,9 @@ function civicrmprofile_modules_installed($modules) {
     module_enable(
       array(
         'civicrmtheme',
+        'options_element',
+        'webform',
+        'webform_civicrm',
       ),
       TRUE
     );
