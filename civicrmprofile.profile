@@ -117,15 +117,3 @@ function civicrmprofile_sitesettings() {
   // variable_set('site_403', '');
   // variable_set('site_404', '');
 }
-
-/**
- * block_info hook: information schema for block
- */
-function civicrmprofile_block_info() {
-}
-
-/**
- * block_view hook to set content for block and to make it visible
- */
-function civicrmprofile_block_view($delta='') {
-}
