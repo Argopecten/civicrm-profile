@@ -147,6 +147,7 @@
  *  5) set various CRM options: display, name format, ...
  *  6) set more contact sub-types
  *  7) set relation types for CiviHelp
+ *  8) disable activity types other then contacts
  */
 function civicrmprofile_modules_installed($modules) {
   // drush_log('It"s the civicrmprofile_modules_installed hook', 'debug');
@@ -193,6 +194,10 @@ function civicrmprofile_modules_installed($modules) {
 
     // 7) set relation types for CiviHelp
     _civicrmprofile_set_relation_types();
+
+    // 8) disable activity types other then contacts
+   _civicrmprofile_disable_activity_types();
+
   }
 }
 
@@ -440,4 +445,19 @@ function _civicrmprofile_set_relation_types() {
     ->addValue('is_active', FALSE)
     ->setCheckPermissions(FALSE)
     ->execute();
+}
+
+/**
+ * _civicrmprofile_disable_activity_types()
+ *
+ * disable activity types other then contacts
+ */
+function _civicrmprofile_disable_activity_types() {
+  // disable where component ID is not null
+  \Civi\Api4\OptionValue::update()
+  ->addWhere('option_group_id', '=', 2)
+  ->addWhere('component_id', 'IS NOT NULL')
+  ->addValue('is_active', FALSE)
+  ->setCheckPermissions(FALSE)
+  ->execute();
 }
