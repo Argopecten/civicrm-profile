@@ -123,7 +123,6 @@ function _drush_civicrmprofile_grant_basic_permissions($role_name) {
         'profile create',
         'profile view',
         'access AJAX API',
-        'register to volunteer',
       )
     )
   );
@@ -144,7 +143,6 @@ function _drush_civicrmprofile_grant_crmuser_permissions($role_name) {
         'add contact notes',
         'access CiviMail',
         'edit inbound email basic information',
-        'log own hours',
       )
     )
   );
@@ -175,9 +173,6 @@ function _drush_civicrmprofile_superuser_permissions() {
         'manage tags',
         'administer Tagsets',
         'edit user-driven message templates',
-        'create volunteer projects',
-        'edit all volunteer projects',
-        'delete all volunteer projects ',
       )
     )
   );
@@ -198,8 +193,6 @@ function _drush_civicrmprofile_crmadmin_permissions() {
         'administer reserved tags',
         'administer reserved groups',
         'edit system workflow message templates',
-        'edit volunteer project relationships ',
-        'edit volunteer registration profiles ',
       )
     )
   );
@@ -216,9 +209,6 @@ function _drush_civicrmprofile_activist_permissions() {
     array(
       $role_name,
       array(
-        'create volunteer projects',
-        'edit own volunteer projects',
-        'delete own volunteer projects',
       )
     )
   );

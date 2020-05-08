@@ -171,7 +171,6 @@ function civicrmprofile_modules_installed($modules) {
       'org.civicrm.flexmailer',
       'org.civicrm.angularprofiles',
       'org.civicrm.contactlayout',
-      'org.civicrm.volunteer',
       'de.systopia.osm',
     );
     _civicrmprofile_enable_extensions($extensions);
