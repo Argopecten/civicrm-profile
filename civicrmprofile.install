@@ -338,6 +338,12 @@ function _civicrmprofile_set_contact_types() {
     ->addValue('parent_id', 1)
     ->setCheckPermissions(FALSE)
     ->execute();
+  \Civi\Api4\ContactType::create()
+    ->addValue('name', 'volunteer')
+    ->addValue('label', 'Önkéntes')
+    ->addValue('parent_id', 1)
+    ->setCheckPermissions(FALSE)
+    ->execute();
 }
 
 /**
