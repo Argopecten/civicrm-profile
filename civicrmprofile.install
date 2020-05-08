@@ -172,6 +172,8 @@ function civicrmprofile_modules_installed($modules) {
       'org.civicrm.angularprofiles',
       'org.civicrm.contactlayout',
       'de.systopia.osm',
+      'de.systopia.xcm',
+      'de.systopia.mutualaid',
     );
     _civicrmprofile_enable_extensions($extensions);
 
@@ -220,6 +222,8 @@ function _civicrmprofile_enable_extensions($extensions) {
       drush_log('civicrmprofile enable_extensions:' . print_r($result, 1), 'warning');
     }
   }
+  // upgrare extensions
+  civicrm_api3('Extension', 'upgrade');
 }
 
 /**
