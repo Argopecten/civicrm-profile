@@ -19,7 +19,7 @@
          "drush/drush": "^8.0",
          "symfony/filesystem": "~2.7|^3",
          "webflo/drupal-finder": "^1.0.0",
-         "civicrm/civicrm": "5.24.6",
+         "civicrm/civicrm": "5.25.0",
          "drupal-composer/drupal-l10n": "1.0.1",
          "civicrm/org.civicrm.shoreditch": "0.1.0+e52d5b8",
          "eileenmcnaughton/nz.co.fuzion.csvimport": "1.5",
@@ -42,7 +42,7 @@
          "drupal/options_element": "1.12",
          "drupal/webform_civicrm": "5.0",
          "drupal/civicrm_views_dashlets": "dev-1.x#c15e3394",
-         "argopecten/civiboot": "1.0.0",
+         "argopecten/civiboot": "1.0.1",
          "drupal/jquery_update": "2.7",
          "drupal/views": "3.24",
          "drupal/panels": "3.9"
