@@ -140,6 +140,14 @@
  * it gives all other modules a chance to perform actions when a module is installed
  * API doc: This hook should be implemented in the .module file!
  *
+ *  1) enable CiviCRM standard components
+ *  2) enable CiviCRM extensions
+ *  3) enable CiviCRM modules
+ *  4) this flavor is using households, do not remove it!
+ *  5) set various CRM options: display, name format, ...
+ *  6) set more contact sub-types
+ *  7) set relation types for CiviHelp
+ *  8) disable activity types other then contacts
  */
 function civicrmprofile_modules_installed($modules) {
   // drush_log('It"s the civicrmprofile_modules_installed hook', 'debug');
@@ -148,14 +156,320 @@ function civicrmprofile_modules_installed($modules) {
     // CiviCRM module is installed
     // drush_log('civicrmprofile_modules_installed: CiviCRM module installed', 'debug');
 
-    // this flavor is using households
+    // 1) enable CiviCRM standard components
+    \Civi\Api4\Setting::set()
+      ->addValue('enable_components', [
+        'CiviMail',
+      ])
+      ->setCheckPermissions(FALSE)
+      ->execute();
 
-    // enable CiviCRM modules: CiviCRM Theme and Webform CiviCRM Integration
+    // 2) enable CiviCRM extensions
+    $extensions = array(
+      'org.civicrm.shoreditch',
+      'nz.co.fuzion.csvimport',
+      'org.civicrm.flexmailer',
+      'org.civicrm.angularprofiles',
+      'org.civicrm.contactlayout',
+      'de.systopia.osm',
+      'de.systopia.xcm',
+      'de.systopia.mutualaid',
+    );
+    _civicrmprofile_enable_extensions($extensions);
+
+    // 3) enable CiviCRM modules
     module_enable(
       array(
         'civicrmtheme',
+        'options_element',
+        'webform',
+        'webform_civicrm',
       ),
       TRUE
     );
+
+    // 4) this flavor is using households, do not remove it!
+
+    // 5) set various CRM options: display, name format, ...
+    _civicrmprofile_set_crm_options();
+
+    // 6) set more contact sub-types
+    _civicrmprofile_set_contact_types();
+
+    // 7) set relation types for CiviHelp
+    _civicrmprofile_set_relation_types();
+
+    // 8) disable activity types other then contacts
+   _civicrmprofile_disable_activity_types();
+
   }
+}
+
+// Enable CiviCRM extensions
+function _civicrmprofile_enable_extensions($extensions) {
+  // download is via composer
+  foreach ($extensions as $key => $ext) {
+    try{
+      civicrm_api3('Extension', 'enable', ['key' => $ext,]);
+    }
+    catch (CiviCRM_API3_Exception $e) {
+      $errorMessage = $e->getMessage();
+      $errorCode = $e->getErrorCode();
+      $errorData = $e->getExtraParams();
+      $result = array(
+        'is_error' => 1,
+        'error_message' => $errorMessage,
+        'error_code' => $errorCode,
+        'error_data' => $errorData,
+      );
+      drush_log('civicrmprofile enable_extensions:' . print_r($result, 1), 'warning');
+    }
+  }
+  // upgrare extensions
+  civicrm_api3('Extension', 'upgrade');
+}
+
+/**
+ * _civicrmprofile_set_crm_options()
+ *
+ * set various CRM options: display, name format, ...
+ * settings:
+ *   - contact options: with relationships (2)
+ *   - mobile phone providers for HU
+ *   - phone types
+ *   - individual prefixes
+ */
+function _civicrmprofile_set_crm_options() {
+  // 1) contact options
+  \Civi\Api4\Setting::set()
+    ->addValue('contact_view_options', [1, 2, 3, 4, 5, 6, 10, 14, ])
+    ->addValue('contact_edit_options', [12, 14, 15, 16, 7, 8, 5, 1, 2, 3, 4, 6, ])
+    ->addValue('user_dashboard_options', [1, 5, 9, ])
+    ->addValue('display_name_format', '{contact.individual_prefix}{ }{contact.last_name}{ }{contact.first_name}')
+    ->setCheckPermissions(FALSE)
+    ->execute();
+
+  // 2) Mobile phone providers
+  \Civi\Api4\OptionValue::update()
+    ->addWhere('option_group_id', '=', 5)
+    ->addWhere('value', '=', 1)
+    ->addValue('label', 'T-Mobile')
+    ->addValue('name',  'T-Mobile')
+    ->setCheckPermissions(FALSE)
+    ->execute();
+  \Civi\Api4\OptionValue::update()
+    ->addWhere('option_group_id', '=', 5)
+    ->addWhere('value', '=', 2)
+    ->addValue('label', 'Vodafone')
+    ->addValue('name',  'Vodafone')
+    ->setCheckPermissions(FALSE)
+    ->execute();
+  \Civi\Api4\OptionValue::update()
+    ->addWhere('option_group_id', '=', 5)
+    ->addWhere('value', '=', 3)
+    ->addValue('label', 'Telenor')
+    ->addValue('name',  'Telenor')
+    ->setCheckPermissions(FALSE)
+    ->execute();
+
+  // 3) phone types
+  \Civi\Api4\OptionValue::update()
+    ->addWhere('option_group_id', '=', 35)
+    ->addWhere('value', '=', 2)
+    ->addValue('label', 'Mobil')
+    ->addValue('name', 'Mobil')
+    ->addValue('is_default', 1)
+    ->setCheckPermissions(FALSE)
+    ->execute();
+  \Civi\Api4\OptionValue::update()
+    ->addWhere('option_group_id', '=', 35)
+    ->addWhere('value', '=', 1)
+    ->addValue('label', 'Vezetékes')
+    ->addValue('name', 'Vezetékes')
+    ->addValue('is_default', 0)
+    ->setCheckPermissions(FALSE)
+    ->execute();
+  \Civi\Api4\OptionValue::update()
+    ->addWhere('option_group_id', '=', 35)
+    ->addWhere('id', '>=', 333)
+    ->addValue('is_active', 0)
+    ->setCheckPermissions(FALSE)
+    ->execute();
+
+  // 4) contact prefixes
+  \Civi\Api4\OptionValue::update()
+    ->addWhere('option_group_id', '=', 6)
+    ->addWhere('value', '=', 1)
+    ->addValue('label', 'özv.')
+    ->addValue('name', 'özv.')
+    ->setCheckPermissions(FALSE)
+    ->execute();
+  \Civi\Api4\OptionValue::update()
+    ->addWhere('option_group_id', '=', 6)
+    ->addWhere('value', '=', 2)
+    ->addValue('label', 'ifj.')
+    ->addValue('name', 'ifj.')
+    ->setCheckPermissions(FALSE)
+    ->execute();
+  \Civi\Api4\OptionValue::update()
+    ->addWhere('option_group_id', '=', 6)
+    ->addWhere('value', '=', 3)
+    ->addValue('label', 'prof.')
+    ->addValue('name', 'prof.')
+    ->setCheckPermissions(FALSE)
+    ->execute();
+
+  // 5) advanced search options: with relationships (4)
+  \Civi\Api4\Setting::set()
+    ->addValue('advanced_search_options', [ 1, 2, 3, 4, 5, 6, 10, 13, 16, 17, 18, 19, ])
+    ->setCheckPermissions(FALSE)
+    ->execute();
+}
+
+function _civicrmprofile_set_contact_types() {
+  \Civi\Api4\ContactType::create()
+    ->addValue('name', 'coordinator')
+    ->addValue('label', 'Koordinátor')
+    ->addValue('parent_id', 1)
+    ->setCheckPermissions(FALSE)
+    ->execute();
+  \Civi\Api4\ContactType::create()
+    ->addValue('name', 'activist')
+    ->addValue('label', 'Aktivista')
+    ->addValue('parent_id', 1)
+    ->setCheckPermissions(FALSE)
+    ->execute();
+  \Civi\Api4\ContactType::create()
+    ->addValue('name', 'helpee')
+    ->addValue('label', 'Támogatott')
+    ->addValue('parent_id', 1)
+    ->setCheckPermissions(FALSE)
+    ->execute();
+  \Civi\Api4\ContactType::create()
+    ->addValue('name', 'volunteer')
+    ->addValue('label', 'Önkéntes')
+    ->addValue('parent_id', 1)
+    ->setCheckPermissions(FALSE)
+    ->execute();
+}
+
+/**
+ * implement hosting_civicrm hook to modify the civicrm.settings.php file template.
+ */
+function civicrmprofile_civicrm_settings_template_alter(&$template) {
+  // drush_log('It"s the civicrmprofile_civicrm_settings_template_alter hook.' . $template, 'debug');
+
+}
+
+/**
+ * _civicrmprofile_set_relation_types()
+ *
+ * set relationship types for CiviHelp
+ */
+function _civicrmprofile_set_relation_types() {
+  // id: 5: update: coordinator - organisation
+  \Civi\Api4\RelationshipType::update()
+    ->addWhere('id', '=', 5)
+    ->addValue('label_a_b', 'Koordinátor')
+    ->addValue('label_b_a', 'Koordinátor')
+    ->addValue('description', 'Szervezeti kapcsolat')
+    ->addValue('contact_sub_type_a', 'coordinator')
+    ->setCheckPermissions(FALSE)
+    ->execute();
+
+  // id: 6: update: volunteer- organisation
+  \Civi\Api4\RelationshipType::update()
+    ->addWhere('id', '=', 6)
+    ->addValue('label_a_b', 'Önkéntes')
+    ->addValue('label_b_a', 'Önkéntes')
+    ->addValue('description', 'Segítői kapcsolat')
+    ->addValue('contact_sub_type_a', 'Volunteer')
+    ->setCheckPermissions(FALSE)
+    ->execute();
+
+  // id: 8: update: family members
+  \Civi\Api4\RelationshipType::update()
+    ->addWhere('id', '=', 8)
+    ->addValue('label_a_b', 'A család tagja')
+    ->addValue('label_b_a', 'Családtag')
+    ->addValue('description', 'Család tagjai')
+    ->setCheckPermissions(FALSE)
+    ->execute();
+
+  // id: 10: update: coordinator - volunteer
+  \Civi\Api4\RelationshipType::update()
+    ->addWhere('id', '=', 10)
+    ->addValue('label_a_b', 'Koordinátora')
+    ->addValue('label_b_a', 'Koordinálja')
+    ->addValue('description', 'önkéntes - koordinátor')
+    ->addValue('contact_sub_type_a', 'coordinator')
+    ->addValue('contact_sub_type_b', 'Volunteer')
+    ->setCheckPermissions(FALSE)
+    ->execute();
+
+  // id: 11: create: activist - volunteer
+  \Civi\Api4\RelationshipType::create()
+    ->addValue('name_a_b', 'coordinated by')
+    ->addValue('name_b_a', 'coordinator')
+    ->addValue('label_a_b', 'Koordinátora')
+    ->addValue('label_b_a', 'Koordinálja')
+    ->addValue('description', 'önkéntes - aktivista')
+    ->addValue('contact_sub_type_a', 'activist')
+    ->addValue('contact_sub_type_b', 'Volunteer')
+    ->addValue('is_active', TRUE)
+    ->addValue('contact_type_a', 'Individual')
+    ->addValue('contact_type_b', 'Individual')
+    ->setCheckPermissions(FALSE)
+    ->execute();
+
+  // id: 12: create: activist - organisation
+  \Civi\Api4\RelationshipType::create()
+    ->addValue('name_a_b', 'helping for')
+    ->addValue('name_b_a', 'activist')
+    ->addValue('label_a_b', 'Aktivista')
+    ->addValue('label_b_a', 'Aktivista')
+    ->addValue('description', 'aktivista - segítői csoport')
+    ->addValue('contact_sub_type_a', 'activist')
+    ->addValue('is_active', TRUE)
+    ->addValue('contact_type_a', 'Individual')
+    ->addValue('contact_type_b', 'Organization')
+    ->setCheckPermissions(FALSE)
+    ->execute();
+
+  // id: 13: create: volunteer - helpee
+  \Civi\Api4\RelationshipType::create()
+    ->addValue('name_a_b', 'helper')
+    ->addValue('name_b_a', 'helpee')
+    ->addValue('label_a_b', 'Ügyfele')
+    ->addValue('label_b_a', 'Segítője')
+    ->addValue('description', 'támogatott - önkéntes')
+    ->addValue('contact_type_a', 'Individual')
+    ->addValue('contact_sub_type_a', 'Volunteer')
+    ->addValue('contact_type_b', 'Individual')
+    ->addValue('contact_sub_type_b', 'helpee')
+    ->addValue('is_active', TRUE)
+    ->setCheckPermissions(FALSE)
+    ->execute();
+
+  // id: 9 disable case coordinator
+  \Civi\Api4\RelationshipType::update()
+    ->addWhere('id', '=', 9)
+    ->addValue('is_active', FALSE)
+    ->setCheckPermissions(FALSE)
+    ->execute();
+}
+
+/**
+ * _civicrmprofile_disable_activity_types()
+ *
+ * disable activity types other then contacts
+ */
+function _civicrmprofile_disable_activity_types() {
+  // disable where component ID is not null
+  \Civi\Api4\OptionValue::update()
+  ->addWhere('option_group_id', '=', 2)
+  ->addWhere('component_id', 'IS NOT NULL')
+  ->addValue('is_active', FALSE)
+  ->setCheckPermissions(FALSE)
+  ->execute();
 }
