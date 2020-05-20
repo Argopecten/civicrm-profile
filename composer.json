@@ -36,6 +36,7 @@
          "drupal/role_delegation": "1.2",
          "drupal/rules": "2.12",
          "drupal/entity": "1.9",
+         "drupal/entityreference": "1.6-rc1",
          "drupal/admin_menu": "3.0-rc6",
          "drupal/ctools": "1.15",
          "drupal/webform": "4.22",
