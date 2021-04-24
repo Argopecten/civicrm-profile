@@ -3,7 +3,7 @@
     "type": "drupal-profile",
     "description": "The CiviCRM profile from Argopecten.",
     "require": {
-         "php": "7.2.* || 7.3.*",
+         "php": "7.2.* || 7.3.* || 7.4.*",
          "ext-curl": "*",
          "ext-gd": "*",
          "ext-json": "*",
