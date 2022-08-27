@@ -1,4 +1,4 @@
-name: CiviCRM
+name: 'CiviCRM profile'
 type: profile
 description: 'CiviCRM install profile'
 core_version_requirement: ^9 || ^10
