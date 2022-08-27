@@ -1,0 +1,20 @@
+name: CiviCRM
+type: profile
+description: 'CiviCRM install profile'
+core_version_requirement: ^9 || ^10
+version: VERSION
+install:
+  - node
+  - block
+  - dblog
+  - page_cache
+  - dynamic_page_cache
+  - config
+  - field_ui
+  - menu_ui
+  - toolbar
+  - views_ui
+  - civicrm
+themes:
+  - bootstrap
+  - claro

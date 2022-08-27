@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the civicrm installation profile.
+ */
+
+ /**
+  * Implements hook_install().
+  * Implementation of hook_install() at configuration install is not supported
+  * https://www.drupal.org/node/2897299 and https://www.drupal.org/project/drupal/issues/2982052
+  *
+  */
+// function civicrmprofile_install() {
+// }
