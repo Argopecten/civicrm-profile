@@ -1,0 +1,17 @@
+{
+  "name": "argopecten/civicrmprofile",
+  "type": "drupal-custom-profile",
+  "description": "The CiviCRM profile from Argopecten.",
+  "require": {
+    "ext-bcmath": "*",
+    "ext-curl": "*",
+    "ext-intl": "*",
+    "ext-mbstring": "*",
+    "ext-soap": "*",
+    "ext-zip": "*",
+    "php": "7.4.* || 8.0.*"
+  },
+  "conflict": {
+    "drupal/core": "7.* || 8.*"
+  }
+}
