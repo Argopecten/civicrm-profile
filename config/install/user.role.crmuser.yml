@@ -1,0 +1,12 @@
+langcode: en
+status: true
+dependencies: {  }
+id: crmuser
+label: 'CRM user'
+weight: 101
+is_admin: false
+permissions:
+  - 'static permission 1'
+  - 'access comments'
+  - 'access content'
+  - 'access shortcuts'
