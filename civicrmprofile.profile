@@ -11,8 +11,42 @@
  */
 function civicrmprofile_install_tasks($install_state){
   $tasks = array(
+    'civicrmprofile_l10n_setup' => array(
+      'display_name' => st('l10n setup'),
+      'display' => FALSE,
+      'type' => 'normal'
+    ),
   );
   return $tasks;
+}
+
+/**
+ * Install task to configure l10n settings in sites/all
+ */
+function civicrmprofile_l10n_setup() {
+  $message='It"s the civicrmprofile_l10n_setup install task. civi d(): <pre><code>' . print_r(d(), TRUE) . '</code></pre>';
+  \Drupal::logger('civicrmprofile')->debug($message);
+
+  $context = d()->context_type;
+  if ($context === "platform") {
+    // platform install: define CIVICRM_L10N_BASEDIR environmental variable as platform settings in Aegir
+    // cp -rl scripts/install-l10n/platform.settings.php web/sites/all/
+    // sed -i "s/PLATFORM_DIR/$(basename $PWD)/g" web/sites/all/platform.settings.php
+
+    $message='platform install: config XXXX';
+    \Drupal::logger('civicrmprofile')->debug($message);
+
+
+  } elseif ($context === "site") {
+    // CRM site install
+    $message='site install: do nothing here';
+    \Drupal::logger('civicrmprofile')->debug($message);
+
+  } else {
+     // something is wrong...
+     $message='wrong context: ' . $context;
+     \Drupal::logger('civicrmprofile')->debug($warning);
+  }
 }
 
 /**
