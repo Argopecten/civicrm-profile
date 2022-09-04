@@ -1,0 +1,26 @@
+name: CiviCRM config module
+type: module
+description: 'Custom settings and hooks for CiviCRM'
+package: CiviCRM
+core_version_requirement: ^9.4 || ^10
+
+# minimal PHP version that is required
+php: 7.4
+
+dependencies:
+  - drupal:config
+  - drupal:field_ui
+  - drupal:media
+  - drupal:menu_ui
+  - drupal:syslog
+  - drupal:toolbar
+  - drupal:views_ui
+  - civicrm:webform_civicrm
+
+#  - civicrm:civicrm_entity
+
+# hide the module from the Extend page
+# hidden: true
+
+# module must be enabled and cannot be uninstalled
+# required: true

@@ -24,25 +24,20 @@
   */
 function drush_civicrmprofile_pre_provision_install() {
   // just a spaceholder for now
-  $message='It"s the drush_civicrmprofile_pre_provision_install hook';
-  \Drupal::logger('civicrmprofile')->debug($message);
+  drush_log('It"s the drush_civicrmprofile_pre_provision_install hook', 'debug');
 }
 
 function drush_civicrmprofile_provision_install() {
   // just a spaceholder for now
-  $message='It"s the drush_civicrmprofile_provision_install hook';
-  \Drupal::logger('civicrmprofile')->debug($message);
+  drush_log('It"s the drush_civicrmprofile_provision_install hook', 'debug');
 }
 
 function drush_civicrmprofile_post_provision_install() {
-  // just a spaceholder for now
-  // $message='It"s the drush_civicrmprofile_post_provision_install hook';
-  $message='It"s the drush_civicrmprofile_post_provision_install hook. civi d(): <pre><code>' . print_r(d(), TRUE) . '</code></pre>';
-  \Drupal::logger('civicrmprofile')->debug($message);
+  drush_log('It"s the drush_civicrmprofile_post_provision_install hook', 'debug');
+  // drush_log('d():' . print_r(d(), 1), 'debug');
 
   $context = d()->context_type;
-  $message='Context_type: ' . $context;
-  \Drupal::logger('civicrmprofile')->debug($message);
+  drush_log('context_type: ' . $context, 'debug');
 
   if ($context === "platform") {
     // do nothing
@@ -50,7 +45,7 @@ function drush_civicrmprofile_post_provision_install() {
     // do nothing
   } else {
     // something is wrong...
-    // drush_log('wrong context at drush_civicrmprofile_post_provision_install: ' . $context, 'warning');
+    drush_log('wrong context at drush_civicrmprofile_post_provision_install: ' . $context, 'warning');
   }
 }
 
@@ -68,14 +63,12 @@ function drush_civicrmprofile_post_provision_install() {
 
  function drush_civicrmprofile_pre_provision_verify() {
    // just a spaceholder for now
-   $message='It"s the drush_civicrmprofile_pre_provision_verify hook';
-   \Drupal::logger('civicrmprofile')->debug($message);
+   drush_log('It"s the drush_civicrmprofile_pre_provision_verify hook', 'debug');
  }
 
  function drush_civicrmprofile_provision_verify() {
    // just a spaceholder for now
-   $message='It"s the drush_civicrmprofile_provision_verify hook';
-   \Drupal::logger('civicrmprofile')->debug($message);
+   drush_log('It"s the drush_civicrmprofile_provision_verify hook', 'debug');
  }
 
 /**
@@ -88,13 +81,11 @@ function drush_civicrmprofile_post_provision_install() {
  *
  */
 function drush_civicrmprofile_post_provision_verify() {
-  // drush_log('civi d():' . print_r(d(), 1), 'debug');
-  $message='It"s the drush_civicrmprofile_post_provision_verify hook. civi d(): <pre><code>' . print_r(d(), TRUE) . '</code></pre>';
-  \Drupal::logger('civicrmprofile')->debug($message);
+  drush_log('It"s the drush_civicrmprofile_post_provision_verify hook', 'debug');
+  // drush_log('d():' . print_r(d(), 1), 'debug');
 
   $context = d()->context_type;
-  $message='Context_type: ' . $context;
-  \Drupal::logger('civicrmprofile')->debug($message);
+  drush_log('context_type: ' . $context, 'debug');
 
   if ($context === "platform") {
     // do nothing
@@ -108,7 +99,7 @@ function drush_civicrmprofile_post_provision_verify() {
 
   } else {
     // something is wrong...
-    // drush_log('wrong context at drush_civicrmprofile_post_provision_verify: ' . $context, 'warning');
+    drush_log('wrong context at drush_civicrmprofile_post_provision_verify: ' . $context, 'warning');
   }
 }
 

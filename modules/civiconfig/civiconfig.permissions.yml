@@ -1,0 +1,8 @@
+static permission 1:
+  title: 'First level permission'
+  description: 'Gives static permission 1 to the users.'
+
+static permission 2:
+  title: 'Second level permission'
+  description: 'Gives static permission 2 to the users.'
+  restrict access: true

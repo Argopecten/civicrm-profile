@@ -1,0 +1,75 @@
+<?php
+
+use Drupal\user\Entity\Role;
+
+/**
+ * @file
+ * Install, update and uninstall functions for the civiconfig module.
+ *
+ * While the implementation of hook_install() is not supported for install profiles, see:
+ * https://www.drupal.org/node/2897299 and https://www.drupal.org/project/drupal/issues/2982052
+ * some functions here are only a workaround.
+ *
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function civiconfig_uninstall() {
+  // Clear data out of the cache.
+  \Drupal::cache('data')->deleteAll();
+
+  // delete CRM roles
+  // https://drupal.stackexchange.com/a/308997/5930
+  $role='crmuser';
+  $usersHavingRole = \Drupal::entityTypeManager()->getStorage('user')->loadByProperties(['roles' => $role]);
+  foreach($usersHavingRole as $user) {
+    $user->removeRole($role);
+    $user->save();
+  }
+  $role_entity = \Drupal\user\Entity\Role::load($role);
+  if (!empty($role_entity)) {
+    $role_entity->delete();
+  }
+
+  // TBD:
+  // disable CiviCRM extensions
+}
+
+/**
+ * Implements hook_install().
+ *
+ * Performs actions to set up CiviCRM
+ *
+ * @see system_install()
+ */
+function civiconfig_install() {
+
+  // 1) enable CiviCRM standard components
+  \Civi\Api4\Setting::set()
+    ->addValue('enable_components', [
+      'CiviContribute',
+      'CiviMember',
+      'CiviMail',
+      'CiviCase',
+      'CiviReport',
+    ])
+    ->setCheckPermissions(FALSE)
+    ->execute();
+
+  // 2) enable CiviCRM extensions
+  $extensions = array(
+    'org.civicrm.shoreditch',
+    'oauth-client',
+    'authx',
+    'org.civicrm.afform_admin',
+    'org.civicrm.contactlayout',
+  );
+  _civiconfig_crm_extensions('enable', $extensions);
+
+  // 4) remove households
+  _civiconfig_remove_households();
+
+  // 5) set various CiviCRM options
+  _civiconfig_civioptions();
+}
